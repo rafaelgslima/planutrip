@@ -224,6 +224,114 @@ Auth operations that need `APP_BASE_URL` (for email redirect URLs) must go throu
 
 ---
 
+## Email System
+
+All authentication emails (password reset, signup confirmation) are handled through **Supabase Send Email Hook** + **Resend SMTP**.
+
+### Architecture
+
+1. **Trigger**: User requests password reset or signs up
+2. **Supabase generates email**: Creates recovery/signup email with auth token
+3. **Send Email Hook intercepts**: `POST /api/auth/send-email-hook` customizes and dispatches via Resend
+4. **User receives branded email**: From `contact@planutrip.com` with custom template
+5. **User clicks link**: Goes to `/api/auth/recover` endpoint for verification
+6. **Session established**: User redirected to form with active session
+7. **User completes action**: Resets password or accesses app
+
+### Email Types & Flows
+
+#### Password Reset (Recovery)
+
+**Trigger**: `POST /api/auth/forgot-password` with email
+- Backend calls `supabase.auth.resetPasswordForEmail(email, { redirectTo: '/reset-password' })`
+- Supabase generates recovery token and calls Send Email Hook
+
+**Send Email Hook** (`/api/auth/send-email-hook`):
+- Receives `email_data` with `email_action_type: 'recovery'`
+- Extracts **actual token** from `email_data.token` (8-char OTP, not the 56-char hash)
+- Builds recovery URL: `/api/auth/recover?token=...&type=recovery&email=...`
+- Sends branded email via Resend from `contact@planutrip.com`
+- Template: Gold header, password reset message, branded button
+
+**Recover Endpoint** (`/api/auth/recover`):
+- Receives: `token`, `type=recovery`, `email`, `next` (redirect URL)
+- Calls `supabase.auth.verifyOtp({ email, token, type: 'recovery' })`
+- If valid: receives session data (access_token, refresh_token, expires_in)
+- Redirects to `/reset-password#access_token=...&refresh_token=...&type=recovery`
+
+**Frontend** (`/reset-password`):
+- Loads form via `useResetPasswordForm` hook
+- Hook calls `supabase.auth.getSession()`
+- Supabase client **automatically detects tokens in URL hash** and establishes session
+- Form becomes active, user enters new password
+- Submit calls `supabase.auth.updateUser({ password: newPassword })`
+- Success: redirects to login
+
+#### Signup Confirmation (Email Verification)
+
+**Trigger**: `POST /api/auth/signup` with email, password, name
+- Backend calls `supabase.auth.signUp({ email, password, options: { data: { name } } })`
+- Supabase generates signup confirmation token and calls Send Email Hook
+
+**Send Email Hook**:
+- Receives `email_data` with `email_action_type: 'signup'`
+- Extracts **actual token** from `email_data.token`
+- Builds URL: `/api/auth/recover?token=...&type=signup&email=...&next=/login`
+- Sends branded email via Resend with confirmation message and button
+
+**Recover Endpoint**:
+- Receives: `token`, `type=signup`, `email`, `next`
+- Calls `supabase.auth.verifyOtp({ email, token, type: 'signup' })`
+- If valid: finds user by email, calls `admin.updateUserById(userId, { email_confirm: true })`
+- Redirects to `/login`
+
+**Frontend** (`/login`):
+- User can now log in with their email and password
+- Email is confirmed, account fully activated
+
+### Token Handling
+
+**Critical**: Use `email_data.token` (the actual OTP), NOT `email_data.token_hash` (the hash)
+
+- `email_data.token`: 8-character OTP — pass this to `verifyOtp()`
+- `email_data.token_hash`: 56-character SHA-256 hash — metadata only, invalid for verification
+- If you use `token_hash` with `verifyOtp`, Supabase returns "Token has expired or is invalid"
+
+### Email Data Properties
+
+When Supabase calls the Send Email Hook, `email_data` contains:
+- `token`: actual OTP token ✓ Use this
+- `token_hash`: hash of the token (for deduplication)
+- `token_new`, `token_hash_new`: for email change flows
+- `email_action_type`: 'recovery' | 'signup' | 'email_change' | etc.
+- `redirect_to`: default redirect (may be overridden)
+- `site_url`: Supabase site URL
+- `old_email`, `old_phone`, `provider`, `factor_type`: context-specific fields
+
+### Files
+
+- `/api/auth/forgot-password.ts`: Initial password reset endpoint
+- `/api/auth/send-email-hook.ts`: Supabase Send Email Hook — customizes + dispatches emails
+- `/api/auth/recover.ts`: Token verification endpoint
+- `/hooks/useResetPasswordForm/index.ts`: Frontend reset form logic
+- `/components/Form/ResetPasswordForm/index.tsx`: Reset password UI
+
+### Configuration
+
+**Environment variables**:
+- `RESEND_API_KEY`: Resend API key for email dispatch
+- `APP_BASE_URL`: Base URL for email links (e.g., `https://planutrip.com`)
+- `NEXT_PUBLIC_SUPABASE_URL`: Supabase instance URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Supabase public key
+- `SUPABASE_SERVICE_ROLE_KEY`: Supabase admin key (server-only)
+
+**Supabase Settings**:
+- Custom SMTP configured with Resend credentials
+- Send Email Hook enabled and configured to POST to `/api/auth/send-email-hook`
+- No email templates need to be configured in Supabase (we customize via hook)
+
+---
+
 ## Security & Compliance
 
 - Never commit secrets. Supabase service role key: backend only. Frontend uses only public keys.
