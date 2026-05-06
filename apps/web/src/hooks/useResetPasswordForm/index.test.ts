@@ -1,4 +1,4 @@
-import { renderHook, act } from "@testing-library/react";
+import { renderHook, act, waitFor } from "@testing-library/react";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { useResetPasswordForm } from "./index";
 
@@ -16,6 +16,7 @@ vi.mock("next/router", () => ({
 vi.mock("@/lib/supabase", () => ({
   supabase: {
     auth: {
+      getSession: vi.fn(),
       updateUser: vi.fn(),
     },
   },
@@ -34,6 +35,11 @@ describe("useResetPasswordForm", () => {
       pathname: "/reset-password",
       query: {},
       asPath: "/reset-password",
+    } as any);
+    // Mock getSession to return a valid session
+    vi.mocked(supabase.auth.getSession).mockResolvedValue({
+      data: { session: { access_token: "mock-token" } },
+      error: null,
     } as any);
   });
 
@@ -217,6 +223,10 @@ describe("useResetPasswordForm", () => {
 
       const { result } = renderHook(() => useResetPasswordForm());
 
+      await waitFor(() => {
+        expect(result.current.isSessionLoading).toBe(false);
+      });
+
       act(() => {
         result.current.handleChange({
           target: { name: "password", value: "NewPass123!" },
@@ -258,6 +268,10 @@ describe("useResetPasswordForm", () => {
 
       const { result } = renderHook(() => useResetPasswordForm());
 
+      await waitFor(() => {
+        expect(result.current.isSessionLoading).toBe(false);
+      });
+
       act(() => {
         result.current.handleChange({
           target: { name: "password", value: "NewPass123!" },
@@ -276,8 +290,47 @@ describe("useResetPasswordForm", () => {
         } as unknown as React.FormEvent);
       });
 
+      expect(result.current.errors.general).toBe("Invalid token");
+      expect(result.current.isSuccess).toBe(false);
+      expect(mockRouterPush).not.toHaveBeenCalled();
+    });
+
+    it("displays Supabase error message when password is same as old password", async () => {
+      vi.mocked(supabase.auth.updateUser).mockResolvedValueOnce({
+        data: { user: null },
+        error: {
+          message: "New password should be different from the old password",
+          name: "AuthError",
+          status: 422,
+        },
+      } as any);
+
+      const { result } = renderHook(() => useResetPasswordForm());
+
+      await waitFor(() => {
+        expect(result.current.isSessionLoading).toBe(false);
+      });
+
+      act(() => {
+        result.current.handleChange({
+          target: { name: "password", value: "OldPass123!" },
+        } as React.ChangeEvent<HTMLInputElement>);
+      });
+
+      act(() => {
+        result.current.handleChange({
+          target: { name: "confirmPassword", value: "OldPass123!" },
+        } as React.ChangeEvent<HTMLInputElement>);
+      });
+
+      await act(async () => {
+        await result.current.handleSubmit({
+          preventDefault: vi.fn(),
+        } as unknown as React.FormEvent);
+      });
+
       expect(result.current.errors.general).toBe(
-        "Failed to reset password. Please try again or request a new reset link.",
+        "New password should be different from the old password"
       );
       expect(result.current.isSuccess).toBe(false);
       expect(mockRouterPush).not.toHaveBeenCalled();
@@ -285,6 +338,10 @@ describe("useResetPasswordForm", () => {
 
     it("does not submit with validation errors", async () => {
       const { result } = renderHook(() => useResetPasswordForm());
+
+      await waitFor(() => {
+        expect(result.current.isSessionLoading).toBe(false);
+      });
 
       act(() => {
         result.current.handleChange({
@@ -309,6 +366,10 @@ describe("useResetPasswordForm", () => {
       } as any);
 
       const { result } = renderHook(() => useResetPasswordForm());
+
+      await waitFor(() => {
+        expect(result.current.isSessionLoading).toBe(false);
+      });
 
       act(() => {
         result.current.handleChange({

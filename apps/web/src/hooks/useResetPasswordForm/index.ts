@@ -131,8 +131,7 @@ export function useResetPasswordForm(): UseResetPasswordFormReturn {
 
         if (error) {
           setErrors({
-            general:
-              "Failed to reset password. Please try again or request a new reset link.",
+            general: error.message || "Failed to reset password. Please try again or request a new reset link.",
           });
           setIsSuccess(false);
         } else {
@@ -144,9 +143,9 @@ export function useResetPasswordForm(): UseResetPasswordFormReturn {
           }, 500);
         }
       } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "Failed to reset password. Please try again or request a new reset link.";
         setErrors({
-          general:
-            "Failed to reset password. Please try again or request a new reset link.",
+          general: errorMessage,
         });
         setIsSuccess(false);
       } finally {
