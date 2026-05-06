@@ -25,45 +25,23 @@ export function useResetPasswordForm(): UseResetPasswordFormReturn {
   const [hasValidSession, setHasValidSession] = useState(false);
 
   useEffect(() => {
-    const verifyRecoveryToken = async () => {
+    const checkSession = async () => {
       try {
-        const { token, type, email } = router.query;
-
-        if (!token || type !== "recovery" || !email) {
-          const { data: { session } } = await supabase.auth.getSession();
-          if (session) {
-            setHasValidSession(true);
-          } else {
-            setErrors({ general: "Recovery link expired or invalid. Please request a new password reset." });
-          }
-          setIsSessionLoading(false);
-          return;
-        }
-
-        const { data, error } = await supabase.auth.verifyOtp({
-          email: email as string,
-          token: token as string,
-          type: "recovery",
-        });
-
-        if (error || !data?.session) {
-          setErrors({ general: "Recovery link expired or invalid. Please request a new password reset." });
-          setHasValidSession(false);
-        } else {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
           setHasValidSession(true);
+        } else {
+          setErrors({ general: "Recovery link expired or invalid. Please request a new password reset." });
         }
       } catch (err) {
         setErrors({ general: "Failed to verify recovery session." });
-        setHasValidSession(false);
       } finally {
         setIsSessionLoading(false);
       }
     };
 
-    if (router.isReady) {
-      verifyRecoveryToken();
-    }
-  }, [router.isReady, router.query]);
+    checkSession();
+  }, []);
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

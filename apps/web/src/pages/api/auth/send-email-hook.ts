@@ -23,17 +23,21 @@ export default async function handler(
       return;
     }
 
-    const emailActionType = email_data.email_action_type;
-
     const toEmail = user.email;
+    const emailActionType = email_data.email_action_type;
     const appBaseUrl = process.env.APP_BASE_URL ?? "http://localhost:3000";
-    const redirectUrl = emailActionType === "recovery"
-      ? `${appBaseUrl.replace(/\/$/, "")}/reset-password`
-      : `${appBaseUrl.replace(/\/$/, "")}/login`;
 
-    // Build custom link using the actual token from Supabase
-    const token = (email_data as any).token || email_data.token_hash;
-    const recoveryUrl = `${appBaseUrl}/api/auth/recover?token=${encodeURIComponent(token)}&type=${emailActionType}&next=${encodeURIComponent(redirectUrl)}&email=${encodeURIComponent(toEmail)}`;
+    // Determine redirect URL based on email action type
+    let redirectUrl = email_data.redirect_to || appBaseUrl;
+    if (emailActionType === "recovery") {
+      redirectUrl = `${appBaseUrl.replace(/\/$/, "")}/reset-password`;
+    } else if (emailActionType === "signup" || emailActionType === "email_change") {
+      redirectUrl = `${appBaseUrl.replace(/\/$/, "")}/login`;
+    }
+
+    // Build custom recovery link using our own endpoint for token verification
+    // Pass token_hash for all types (recovery verifies it, signup uses it to identify the request)
+    const recoveryUrl = `${appBaseUrl}/api/auth/recover?token_hash=${encodeURIComponent(email_data.token_hash)}&type=${emailActionType}&next=${encodeURIComponent(redirectUrl)}&email=${encodeURIComponent(toEmail)}`;
 
     // Generate HTML email
     let html = getEmailHtml(emailActionType, recoveryUrl);
