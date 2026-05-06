@@ -19,26 +19,8 @@ export default async function handler(
     const { user, email_data } = body;
 
     if (!user || !email_data) {
-      console.error("[send-email-hook] missing user or email_data");
       res.status(400).json({ success: false });
       return;
-    }
-
-    const emailDataKeys = Object.keys(email_data);
-    const hasToken = "token" in email_data;
-    const hasTokenHash = "token_hash" in email_data;
-
-    console.log("[send-email-hook] email_data properties:");
-    console.log("  - has 'token':", hasToken, hasToken ? `length=${String(email_data.token).length}` : "");
-    console.log("  - has 'token_hash':", hasTokenHash, hasTokenHash ? `value=${String(email_data.token_hash).substring(0, 30)}...` : "");
-    console.log("  - has 'nonce':", "nonce" in email_data);
-    console.log("  - all keys:", emailDataKeys.join(", "));
-
-    // Check for any token-like properties
-    for (const key of emailDataKeys) {
-      if (key.toLowerCase().includes("token") || key.toLowerCase().includes("code")) {
-        console.log(`  - Found key '${key}':`, String((email_data as any)[key]).substring(0, 50));
-      }
     }
 
     const toEmail = user.email;
@@ -59,12 +41,6 @@ export default async function handler(
     const token = email_data.token || email_data.token_hash;
     const recoveryUrl = `${appBaseUrl}/api/auth/recover?token=${encodeURIComponent(token as string)}&type=${emailActionType}&next=${encodeURIComponent(redirectUrl)}&email=${encodeURIComponent(toEmail)}`;
 
-    console.log("[send-email-hook] Built recovery URL:", {
-      recoveryUrl: recoveryUrl.substring(0, 100) + "...",
-      token_hash_included: !!email_data.token_hash,
-      type: emailActionType,
-    });
-
     // Generate HTML email
     let html = getEmailHtml(emailActionType, recoveryUrl);
     const subject = getEmailSubject(emailActionType);
@@ -78,22 +54,11 @@ export default async function handler(
 
     const resend = new Resend(resendApiKey);
 
-    console.log("[send-email-hook] Sending email via Resend:", {
-      to: toEmail,
-      subject,
-      from: "Planutrip <contact@planutrip.com>",
-    });
-
-    const sendResult = await resend.emails.send({
+    await resend.emails.send({
       from: "Planutrip <contact@planutrip.com>",
       to: toEmail,
       subject,
       html,
-    });
-
-    console.log("[send-email-hook] Resend result:", {
-      success: !sendResult.error,
-      error: sendResult.error ? sendResult.error.message : null,
     });
 
     res.status(200).json({ success: true });
