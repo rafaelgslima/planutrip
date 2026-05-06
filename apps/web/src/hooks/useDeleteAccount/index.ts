@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { useRouter } from "next/router";
+import { supabase } from "@/lib/supabase";
 import { getSupabaseAccessToken } from "@/utils/getSupabaseAccessToken";
 import type { UseDeleteAccountReturn } from "./types";
 
@@ -27,10 +28,8 @@ export function useDeleteAccount(): UseDeleteAccountReturn {
         throw new Error(data.message || "Failed to delete account");
       }
 
-      // Redirect to home page after successful deletion
-      setTimeout(() => {
-        router.push("/");
-      }, 500);
+      await supabase.auth.signOut();
+      router.push("/");
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : "Failed to delete account";
       setError(errorMsg);
