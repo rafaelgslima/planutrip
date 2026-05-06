@@ -24,6 +24,8 @@ export default async function handler(
       return;
     }
 
+    console.log("[send-email-hook] Received email_data keys:", Object.keys(email_data));
+    console.log("[send-email-hook] Full email_data:", JSON.stringify(email_data, null, 2));
     console.log("[send-email-hook] Received email_data:", {
       email_action_type: email_data.email_action_type,
       token_hash: (email_data.token_hash as string)?.substring(0, 20) + "...",
