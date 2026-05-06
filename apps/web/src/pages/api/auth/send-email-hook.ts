@@ -19,9 +19,17 @@ export default async function handler(
     const { user, email_data } = body;
 
     if (!user || !email_data) {
+      console.error("[send-email-hook] missing user or email_data");
       res.status(400).json({ success: false });
       return;
     }
+
+    console.log("[send-email-hook] Received email_data:", {
+      email_action_type: email_data.email_action_type,
+      token_hash: (email_data.token_hash as string)?.substring(0, 20) + "...",
+      user_email: user.email,
+      available_keys: Object.keys(email_data),
+    });
 
     const toEmail = user.email;
     const emailActionType = email_data.email_action_type;
@@ -40,6 +48,12 @@ export default async function handler(
     // Build custom recovery link using our own endpoint for token verification
     const recoveryUrl = `${appBaseUrl}/api/auth/recover?token_hash=${email_data.token_hash}&type=${emailActionType}&next=${encodeURIComponent(redirectUrl)}&email=${encodeURIComponent(toEmail)}`;
 
+    console.log("[send-email-hook] Built recovery URL:", {
+      recoveryUrl: recoveryUrl.substring(0, 100) + "...",
+      token_hash_included: !!email_data.token_hash,
+      type: emailActionType,
+    });
+
     // Generate HTML email
     let html = getEmailHtml(emailActionType, recoveryUrl);
     const subject = getEmailSubject(emailActionType);
@@ -53,11 +67,22 @@ export default async function handler(
 
     const resend = new Resend(resendApiKey);
 
-    await resend.emails.send({
+    console.log("[send-email-hook] Sending email via Resend:", {
+      to: toEmail,
+      subject,
+      from: "Planutrip <contact@planutrip.com>",
+    });
+
+    const sendResult = await resend.emails.send({
       from: "Planutrip <contact@planutrip.com>",
       to: toEmail,
       subject,
       html,
+    });
+
+    console.log("[send-email-hook] Resend result:", {
+      success: !sendResult.error,
+      error: sendResult.error ? sendResult.error.message : null,
     });
 
     res.status(200).json({ success: true });

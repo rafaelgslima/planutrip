@@ -27,13 +27,21 @@ export function useResetPasswordForm(): UseResetPasswordFormReturn {
   useEffect(() => {
     const checkSession = async () => {
       try {
+        console.log("[useResetPasswordForm] Checking for session...");
         const { data: { session } } = await supabase.auth.getSession();
+        console.log("[useResetPasswordForm] Session check result:", {
+          has_session: !!session,
+          session_user: session?.user?.email,
+          access_token_exists: !!session?.access_token,
+        });
         if (session) {
           setHasValidSession(true);
         } else {
+          console.log("[useResetPasswordForm] No session found");
           setErrors({ general: "Recovery link expired or invalid. Please request a new password reset." });
         }
       } catch (err) {
+        console.error("[useResetPasswordForm] Error checking session:", err);
         setErrors({ general: "Failed to verify recovery session." });
       } finally {
         setIsSessionLoading(false);

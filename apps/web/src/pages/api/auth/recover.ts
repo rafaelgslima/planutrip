@@ -18,7 +18,15 @@ export default async function handler(
   try {
     const { token_hash, type, next } = req.query;
 
+    console.log("[recover] Received request:", {
+      token_hash,
+      type,
+      next,
+      email: req.query.email,
+    });
+
     if (!token_hash || !type) {
+      console.log("[recover] Missing token_hash or type");
       res.status(400).json({ success: false, message: "Missing token or type" });
       return;
     }
@@ -29,13 +37,25 @@ export default async function handler(
       process.env.SUPABASE_SERVICE_ROLE_KEY!,
     );
 
+    console.log("[recover] Calling verifyOtp with:", {
+      email: req.query.email,
+      token_length: (token_hash as string).length,
+      type,
+    });
+
     const { data, error } = await supabaseAdmin.auth.verifyOtp({
       email: req.query.email as string,
       token: token_hash as string,
       type: type as any,
     });
 
+    console.log("[recover] verifyOtp result:", {
+      error: error ? { message: error.message, status: error.status } : null,
+      session_exists: !!data?.session,
+    });
+
     if (error || !data.session) {
+      console.log("[recover] Error or no session, redirecting with error");
       const redirectUrl = next || process.env.APP_BASE_URL || "http://localhost:3000";
       const errorUrl = `${redirectUrl}#error=invalid_token&error_description=Recovery link is invalid or expired`;
       res.setHeader("Location", errorUrl);
