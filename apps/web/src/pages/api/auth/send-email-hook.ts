@@ -24,14 +24,22 @@ export default async function handler(
       return;
     }
 
-    console.log("[send-email-hook] Received email_data keys:", Object.keys(email_data));
-    console.log("[send-email-hook] Full email_data:", JSON.stringify(email_data, null, 2));
-    console.log("[send-email-hook] Received email_data:", {
-      email_action_type: email_data.email_action_type,
-      token_hash: (email_data.token_hash as string)?.substring(0, 20) + "...",
-      user_email: user.email,
-      available_keys: Object.keys(email_data),
-    });
+    const emailDataKeys = Object.keys(email_data);
+    const hasToken = "token" in email_data;
+    const hasTokenHash = "token_hash" in email_data;
+
+    console.log("[send-email-hook] email_data properties:");
+    console.log("  - has 'token':", hasToken, hasToken ? `length=${String(email_data.token).length}` : "");
+    console.log("  - has 'token_hash':", hasTokenHash, hasTokenHash ? `value=${String(email_data.token_hash).substring(0, 30)}...` : "");
+    console.log("  - has 'nonce':", "nonce" in email_data);
+    console.log("  - all keys:", emailDataKeys.join(", "));
+
+    // Check for any token-like properties
+    for (const key of emailDataKeys) {
+      if (key.toLowerCase().includes("token") || key.toLowerCase().includes("code")) {
+        console.log(`  - Found key '${key}':`, String((email_data as any)[key]).substring(0, 50));
+      }
+    }
 
     const toEmail = user.email;
     const emailActionType = email_data.email_action_type;
