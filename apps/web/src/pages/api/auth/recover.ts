@@ -16,17 +16,17 @@ export default async function handler(
   }
 
   try {
-    const { token_hash, type, next } = req.query;
+    const { token, type, next } = req.query;
 
     console.log("[recover] Received request:", {
-      token_hash,
+      token: token ? (token as string).substring(0, 20) + "..." : null,
       type,
       next,
       email: req.query.email,
     });
 
-    if (!token_hash || !type) {
-      console.log("[recover] Missing token_hash or type");
+    if (!token || !type) {
+      console.log("[recover] Missing token or type");
       res.status(400).json({ success: false, message: "Missing token or type" });
       return;
     }
@@ -39,13 +39,13 @@ export default async function handler(
 
     console.log("[recover] Calling verifyOtp with:", {
       email: req.query.email,
-      token_length: (token_hash as string).length,
+      token_length: (token as string).length,
       type,
     });
 
     const { data, error } = await supabaseAdmin.auth.verifyOtp({
       email: req.query.email as string,
-      token: token_hash as string,
+      token: token as string,
       type: type as any,
     });
 

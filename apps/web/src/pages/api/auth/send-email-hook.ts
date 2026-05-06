@@ -55,8 +55,9 @@ export default async function handler(
       redirectUrl = `${appBaseUrl.replace(/\/$/, "")}/login`;
     }
 
-    // Build custom recovery link using our own endpoint for token verification
-    const recoveryUrl = `${appBaseUrl}/api/auth/recover?token_hash=${email_data.token_hash}&type=${emailActionType}&next=${encodeURIComponent(redirectUrl)}&email=${encodeURIComponent(toEmail)}`;
+    // Build custom recovery link using the actual token from email_data
+    const token = email_data.token || email_data.token_hash;
+    const recoveryUrl = `${appBaseUrl}/api/auth/recover?token=${encodeURIComponent(token as string)}&type=${emailActionType}&next=${encodeURIComponent(redirectUrl)}&email=${encodeURIComponent(toEmail)}`;
 
     console.log("[send-email-hook] Built recovery URL:", {
       recoveryUrl: recoveryUrl.substring(0, 100) + "...",
