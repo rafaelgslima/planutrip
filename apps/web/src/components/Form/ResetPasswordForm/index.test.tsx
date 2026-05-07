@@ -13,8 +13,24 @@ vi.mock("@/lib/supabase", () => ({
   supabase: {
     auth: {
       updateUser: vi.fn(),
+      getSession: vi.fn(),
     },
   },
+}));
+
+vi.mock("@/hooks/useResetPasswordForm", () => ({
+  useResetPasswordForm: () => ({
+    values: { password: "", confirmPassword: "" },
+    errors: {},
+    touched: { password: false, confirmPassword: false },
+    isSubmitting: false,
+    isSuccess: false,
+    isSessionLoading: false,
+    hasValidSession: true,
+    handleChange: vi.fn(),
+    handleBlur: vi.fn(),
+    handleSubmit: vi.fn((e) => e.preventDefault()),
+  }),
 }));
 
 describe("ResetPasswordForm", () => {

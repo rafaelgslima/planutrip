@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
 import { MdEdit, MdCheck } from "react-icons/md";
 import { formatTime } from "@/utils/timeOptions";
 import type { DayPlanItemCardProps } from "./types";
 
 export function DayPlanItemCard({ item, onEdit, onToggleDone, dragListeners, readOnly }: DayPlanItemCardProps) {
+  const { t } = useTranslation('travel-plans');
   return (
     <div
       className={[
@@ -17,7 +19,7 @@ export function DayPlanItemCard({ item, onEdit, onToggleDone, dragListeners, rea
         type="button"
         onClick={() => !readOnly && onToggleDone(item.id, !item.isDone)}
         disabled={readOnly}
-        aria-label={item.isDone ? "Mark as not done" : "Mark as done"}
+        aria-label={item.isDone ? t('inlineEditActivity.markNotDone') : t('inlineEditActivity.markDone')}
         aria-pressed={item.isDone}
         className={[
           "shrink-0 flex items-center justify-center w-9 border-r transition-colors duration-300 bg-transparent",

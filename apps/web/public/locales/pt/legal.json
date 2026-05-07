@@ -1,0 +1,126 @@
+{
+  "privacyPolicy": {
+    "title": "Política de Privacidade",
+    "lastUpdated": "Última atualização",
+    "effectiveDate": "Data de Vigência",
+    "introduction": "Bem-vindo ao Planutrip. Nos comprometemos em proteger sua privacidade e garantir que você tenha uma experiência positiva em nosso site e aplicativos móveis.",
+    "sections": {
+      "information": {
+        "title": "Informações que Coletamos",
+        "description": "Coletamos informações que você nos fornece diretamente, como quando você cria uma conta, atualiza seu perfil ou nos contacta."
+      },
+      "usage": {
+        "title": "Como Usamos Suas Informações",
+        "description": "Usamos as informações que coletamos para fornecer, manter e melhorar nossos serviços, e para nos comunicarmos com você."
+      },
+      "security": {
+        "title": "Segurança",
+        "description": "Implementamos medidas técnicas e organizacionais apropriadas projetadas para proteger informações pessoais contra destruição acidental ou ilícita, perda, alteração, divulgação não autorizada ou acesso."
+      },
+      "rights": {
+        "title": "Seus Direitos",
+        "description": "Você tem o direito de acessar, atualizar ou deletar suas informações pessoais a qualquer momento."
+      },
+      "contact": {
+        "title": "Entre em Contato",
+        "description": "Se você tiver alguma dúvida sobre esta política de privacidade, entre em contato conosco em contact@planutrip.com."
+      }
+    },
+    "acceptanceRequired": "Ao usar Planutrip, você concorda com os termos desta Política de Privacidade.",
+    "backButton": "Voltar"
+  },
+  "termsOfService": {
+    "title": "Termos de Serviço",
+    "lastUpdated": "Última atualização",
+    "effectiveDate": "Data de Vigência",
+    "section1": {
+      "title": "1. Aceitação dos Termos",
+      "content": "Ao acessar e usar o Planutrip, você aceita e concorda em estar vinculado aos termos e disposições deste acordo. Se você não concordar em cumprir o acima, favor não use este serviço."
+    },
+    "section2": {
+      "title": "2. Elegibilidade de Idade",
+      "content": "Este serviço é destinado a usuários com 18 anos de idade ou mais. Ao usar o Planutrip, você representa e garante que tem pelo menos 18 anos de idade. Se você tiver menos de 18 anos de idade, você não é permitido usar este serviço. Nós não coletamos conscientemente informações pessoais de indivíduos menores de 18 anos. Se nos tornarmos cientes de que coletamos informações de alguém menor de 18 anos, tomaremos as medidas apropriadas para deletar tais informações e encerrar a conta do usuário."
+    },
+    "section3": {
+      "title": "3. Licença de Uso",
+      "content": "É concedida permissão para baixar temporariamente uma cópia dos materiais (informações ou software) no Planutrip apenas para visualização pessoal e não comercial. Esta é a concessão de uma licença, não uma transferência de título, e sob esta licença você não pode:",
+      "restrictions": [
+        "Modificar ou copiar os materiais",
+        "Usar os materiais para qualquer propósito comercial ou para qualquer exibição pública",
+        "Tentar descompilar ou fazer engenharia reversa de qualquer software contido no Planutrip",
+        "Remover qualquer aviso de direitos autorais ou outras notações de propriedade dos materiais",
+        "Transferir os materiais para outra pessoa ou \"espelhar\" os materiais em qualquer outro servidor"
+      ]
+    },
+    "section4": {
+      "title": "4. Colaboração e Compartilhamento",
+      "content": "O Planutrip permite que você crie planos de viagem e os compartilhe com outros usuários. Quando você compartilha um plano:",
+      "points": [
+        "Os colaboradores que você convida ganham a capacidade de visualizar, editar e deletar itens dentro do plano compartilhado",
+        "Apenas o proprietário do plano pode deletar o plano de viagem inteiro e revogar o acesso dos colaboradores",
+        "Você é responsável por convidar apenas usuários autorizados e manter a privacidade do plano",
+        "O compartilhamento é feito por convite por email; você deve fornecer endereços de email válidos"
+      ]
+    },
+    "section5": {
+      "title": "5. Conduta do Usuário",
+      "content": "Você concorda em não usar o Planutrip para:",
+      "prohibited": [
+        "Assediar, ameaçar ou abusar de outros usuários",
+        "Compartilhar ou postar conteúdo ilegal, violento ou prejudicial",
+        "Fazer spam ou manipular os recursos de compartilhamento e convite",
+        "Tentar ganhar acesso não autorizado a contas ou sistemas",
+        "Compartilhar conteúdo abusivo, difamatório ou obsceno em planos de viagem"
+      ]
+    },
+    "section6": {
+      "title": "6. Responsabilidade da Conta",
+      "content": "Você é responsável por manter a confidencialidade das credenciais de login da sua conta e por todas as atividades que ocorrem na sua conta. Você concorda em notificar o Planutrip imediatamente de qualquer uso não autorizado da sua conta. O Planutrip não é responsável pelas perdas causadas por acesso não autorizado à sua conta devido à sua falha em proteger suas credenciais."
+    },
+    "section7": {
+      "title": "7. Propriedade de Dados e Deletação",
+      "content": "Você retém total propriedade de seus planos de viagem e dos dados que você cria. Quando você deleta sua conta:",
+      "dataPoints": [
+        "Todos os seus planos de viagem e itinerários são deletados de nossos sistemas",
+        "Mantemos logs de uso anônimos por até 30 dias para fins de segurança",
+        "Os colaboradores perderão o acesso aos seus planos compartilhados"
+      ]
+    },
+    "section8": {
+      "title": "8. Limitação de Responsabilidade",
+      "content": "O Planutrip é fornecido em uma base \"NO ESTADO\" e \"CONFORME DISPONÍVEL\" sem garantias de qualquer tipo, expressas ou implícitas. O Planutrip nega todas as garantias, expressas ou implícitas, incluindo, mas não limitado a, garantias implícitas de comercialização e adequação a um fim específico. O Planutrip não será responsável por:",
+      "liabilities": [
+        "Perda de dados ou interrupções de serviço",
+        "Contratempos de viagem, acidentes ou incidentes relacionados a planos criados na plataforma",
+        "Disputas entre você e outros usuários ou colaboradores",
+        "Danos resultantes de acesso não autorizado à sua conta"
+      ]
+    },
+    "section9": {
+      "title": "9. Modificações do Serviço",
+      "content": "O Planutrip se reserva o direito de modificar ou descontinuar, temporária ou permanentemente, o serviço (ou qualquer parte dele) com ou sem aviso prévio. Você concorda que o Planutrip não será responsável por você ou por qualquer terceira parte por qualquer modificação, suspensão ou descontinuação do serviço."
+    },
+    "section10": {
+      "title": "10. Lei Aplicável",
+      "content": "Estes termos e condições são regidos e interpretados de acordo com as leis da jurisdição na qual o Planutrip opera, e você irrevogavelmente se submete à jurisdição exclusiva dos tribunais nesse local."
+    },
+    "section11": {
+      "title": "11. Conformidade com GDPR e LGPD",
+      "intro": "O Planutrip é comprometido com a conformidade com o Regulamento Geral de Proteção de Dados (GDPR) na União Europeia e com a Lei Geral de Proteção de Dados (LGPD) no Brasil.",
+      "acceptanceLine": "Quando você aceita estes Termos de Serviço durante o cadastro:",
+      "compliancePoints": [
+        "Você consente com nossa coleta e processamento de dados pessoais conforme descrito em nossa Política de Privacidade",
+        "Seu timestamp de consentimento e a versão da Política de Privacidade são registrados para transparência e auditorias de conformidade",
+        "Logs de auditoria registrando suas atividades de processamento de dados são retidos por 180 dias para fins de conformidade e depois automaticamente deletados",
+        "Você tem o direito de retirar o consentimento a qualquer momento deletando sua conta",
+        "Você retém todos os direitos sob GDPR e LGPD, incluindo acesso a dados, correção, deletação e portabilidade",
+        "Em caso de violação de dados, notificaremos os usuários afetados por email dentro de 72 horas conforme exigido pelo Artigo 33 da GDPR e Artigo 33 da LGPD"
+      ],
+      "privacyNote": "Para mais detalhes sobre seus direitos e como protegemos seus dados, consulte nossa Política de Privacidade."
+    },
+    "section12": {
+      "title": "12. Entre em Contato",
+      "content": "Se você tiver dúvidas sobre estes Termos de Serviço, entre em contato conosco em support@planutrip.app"
+    }
+  }
+}

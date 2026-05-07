@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { MdClose } from "react-icons/md";
 import type { DeleteTravelPlanModalProps } from "./types";
 
@@ -6,6 +7,7 @@ export function DeleteTravelPlanModal({
   onClose,
   onConfirm,
 }: DeleteTravelPlanModalProps) {
+  const { t } = useTranslation('travel-plans');
   if (!isOpen) return null;
 
   return (
@@ -13,7 +15,7 @@ export function DeleteTravelPlanModal({
       className="fixed inset-0 z-50"
       role="dialog"
       aria-modal="true"
-      aria-label="Delete travel plan"
+      aria-label={t('deleteModal.title')}
     >
       <div
         className="fixed inset-0 bg-[rgba(10,8,5,0.85)] backdrop-blur-sm"
@@ -27,21 +29,20 @@ export function DeleteTravelPlanModal({
             {/* Header */}
             <div className="flex items-start justify-between gap-4 mb-3">
               <h3 className="font-outfit text-[28px] font-normal text-tf-text tracking-[-0.02em] leading-[1.1]">
-                Delete travel plan
+                {t('deleteModal.title')}
               </h3>
               <button
                 type="button"
                 onClick={onClose}
                 className="bg-transparent border-none cursor-pointer text-tf-muted p-1 shrink-0 mt-1"
-                aria-label="Close modal"
+                aria-label="Close"
               >
                 <MdClose size={18} aria-hidden="true" />
               </button>
             </div>
 
             <p className="text-sm text-tf-muted font-outfit leading-relaxed mb-7">
-              Are you sure you want to delete this travel plan? This action is{" "}
-              <span className="text-red-300 font-medium">permanent</span> and cannot be undone. All itinerary items will be lost.
+              {t('deleteModal.message')}
             </p>
 
             <div className="flex gap-[10px]">
@@ -50,14 +51,14 @@ export function DeleteTravelPlanModal({
                 onClick={onClose}
                 className="tf-btn-ghost flex-1"
               >
-                Cancel
+                {t('deleteModal.cancelButton')}
               </button>
               <button
                 type="button"
                 onClick={onConfirm}
                 className="tf-btn-danger flex-1"
               >
-                Delete
+                {t('deleteModal.confirmButton')}
               </button>
             </div>
           </div>

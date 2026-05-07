@@ -1,9 +1,11 @@
+import { useTranslation } from "react-i18next";
 import { useResetPasswordForm } from "@/hooks/useResetPasswordForm";
 import { LoadingSpinner } from "@/components/Loading/LoadingSpinner";
 import { PasswordInput } from "@/components/Form/PasswordInput";
 import type { ResetPasswordFormProps } from "./types";
 
 export function ResetPasswordForm(_props: ResetPasswordFormProps) {
+  const { t } = useTranslation('auth');
   const {
     values,
     errors,
@@ -20,7 +22,7 @@ export function ResetPasswordForm(_props: ResetPasswordFormProps) {
   if (isSessionLoading) {
     return (
       <div className="flex flex-col gap-5">
-        <p className="text-center text-tf-muted">Verifying recovery link…</p>
+        <p className="text-center text-tf-muted">{t('resetPassword.verifyingLink', { defaultValue: 'Verifying recovery link…' })}</p>
         <LoadingSpinner />
       </div>
     );
@@ -30,7 +32,7 @@ export function ResetPasswordForm(_props: ResetPasswordFormProps) {
     return (
       <div className="flex flex-col gap-5">
         <div className="tf-alert-error" role="alert">
-          {errors.general || "Recovery link expired or invalid. Please request a new password reset."}
+          {errors.general || t('resetPassword.linkInvalid', { defaultValue: 'Recovery link expired or invalid. Please request a new password reset.' })}
         </div>
       </div>
     );
@@ -40,7 +42,7 @@ export function ResetPasswordForm(_props: ResetPasswordFormProps) {
     <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
       {isSuccess && (
         <div className="tf-alert-success" role="alert">
-          Password reset successful! Redirecting to login…
+          {t('resetPassword.passwordUpdated')}
         </div>
       )}
       {errors.general && (
@@ -48,11 +50,11 @@ export function ResetPasswordForm(_props: ResetPasswordFormProps) {
       )}
 
       <p className="text-[13px] text-tf-muted font-outfit leading-relaxed text-center">
-        Enter your new password below. Make sure it&apos;s strong and secure.
+        {t('resetPassword.subtitle')}
       </p>
 
       <div>
-        <label htmlFor="password" className="tf-label">New password</label>
+        <label htmlFor="password" className="tf-label">{t('resetPassword.newPasswordLabel')}</label>
         <PasswordInput
           id="password"
           name="password"
@@ -64,7 +66,7 @@ export function ResetPasswordForm(_props: ResetPasswordFormProps) {
           hasError={touched.password && !!errors.password}
           ariaInvalid={touched.password && !!errors.password}
           ariaDescribedBy={touched.password && errors.password ? "password-error" : undefined}
-          placeholder="Enter new password"
+          placeholder={t('resetPassword.newPasswordPlaceholder')}
         />
         {touched.password && errors.password && (
           <p id="password-error" className="text-xs text-red-300 font-outfit mt-1" role="alert">{errors.password}</p>
@@ -72,7 +74,7 @@ export function ResetPasswordForm(_props: ResetPasswordFormProps) {
       </div>
 
       <div>
-        <label htmlFor="confirmPassword" className="tf-label">Confirm password</label>
+        <label htmlFor="confirmPassword" className="tf-label">{t('resetPassword.confirmPasswordLabel')}</label>
         <PasswordInput
           id="confirmPassword"
           name="confirmPassword"
@@ -84,7 +86,7 @@ export function ResetPasswordForm(_props: ResetPasswordFormProps) {
           hasError={touched.confirmPassword && !!errors.confirmPassword}
           ariaInvalid={touched.confirmPassword && !!errors.confirmPassword}
           ariaDescribedBy={touched.confirmPassword && errors.confirmPassword ? "confirm-password-error" : undefined}
-          placeholder="Confirm new password"
+          placeholder={t('resetPassword.confirmPasswordPlaceholder')}
         />
         {touched.confirmPassword && errors.confirmPassword && (
           <p id="confirm-password-error" className="text-xs text-red-300 font-outfit mt-1" role="alert">{errors.confirmPassword}</p>
@@ -95,9 +97,9 @@ export function ResetPasswordForm(_props: ResetPasswordFormProps) {
         {isSubmitting ? (
           <>
             <LoadingSpinner size="sm" className="text-stone-900" />
-            Resetting password…
+            {t('resetPassword.resettingPassword')}
           </>
-        ) : isSuccess ? "Password reset" : "Reset password"}
+        ) : isSuccess ? t('resetPassword.passwordUpdated') : t('resetPassword.resetPassword')}
       </button>
     </form>
   );

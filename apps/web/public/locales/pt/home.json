@@ -1,0 +1,41 @@
+{
+  "hero": {
+    "eyebrow": "Planejamento colaborativo de viagens",
+    "headline1": "Planeje viagens",
+    "headline2": "que pareçam",
+    "headline3": "aventuras.",
+    "subtext": "Crie roteiros dia a dia, convide sua turma de viagem e coordene cada detalhe em conjunto — de qualquer lugar.",
+    "startForFree": "Começar grátis",
+    "seeHowItWorks": "Veja como funciona →"
+  },
+  "simplicity": {
+    "eyebrow": "Incrivelmente simples",
+    "headline1": "Apenas seu nome",
+    "headline2": "e email.",
+    "description": "Sem formulários infinitos. Sem coleta desnecessária de dados. Em 30 segundos, você está planejando sua próxima aventura. É isso.",
+    "privacyFirst": "Privacidade em primeiro lugar.",
+    "privacyDescription": "Seus dados são seus.",
+    "alwaysFree": "Sempre gratuito.",
+    "alwaysFreeDescription": "Sem cartão de crédito necessário. Planeje viagens ilimitadas."
+  },
+  "features": {
+    "eyebrow": "Tudo que você precisa",
+    "headline1": "Criado para a forma",
+    "headline2": "como você realmente viaja.",
+    "dayByDay": "Roteiros dia a dia",
+    "dayByDayDesc": "Organize cada viagem com cronogramas diários detalhados. Adicione atividades, refeições e atrações com horários específicos para manter todos no mesmo ritmo.",
+    "inviteCrew": "Convide sua turma",
+    "inviteCrewDesc": "Compartilhe planos com amigos e família em segundos. Envie um convite por email e eles estarão dentro — colaborando no roteiro instantaneamente.",
+    "editTogether": "Editem juntos, a qualquer hora",
+    "editTogetherDesc": "Todo colaborador pode adicionar ideias, reorganizar atividades e manter o roteiro sincronizado — quer estejam na mesma sala ou do outro lado do mundo."
+  },
+  "cta": {
+    "headline1": "Pronto para sua próxima",
+    "headline2": "aventura?",
+    "description": "Crie sua primeira viagem em menos de um minuto.\nGrátis, para sempre.",
+    "createFirstTrip": "Criar primeira viagem →"
+  },
+  "footer": {
+    "copyright": "© {{year}} Planutrip. Todos os direitos reservados."
+  }
+}

@@ -1,7 +1,9 @@
+import { useTranslation } from "react-i18next";
 import { AuthPageHeader } from "@/components/AuthPageHeader";
 import { LoginForm } from "@/components/Form/LoginForm";
 
 export default function LoginPage() {
+  const { t } = useTranslation('auth');
   return (
     <div className="min-h-screen bg-tf-bg flex flex-col items-center justify-start md:justify-center pt-8 md:pt-0 p-6 relative">
       <div className="grain" aria-hidden="true" />
@@ -19,8 +21,8 @@ export default function LoginPage() {
       />
       <div className="w-full max-w-[440px] bg-tf-card border border-tf-border rounded-[20px] p-10 relative z-[1] shadow-[0_24px_64px_rgba(0,0,0,0.3)]">
         <AuthPageHeader
-          title="Welcome back"
-          subtitle="Sign in to your account to continue"
+          title={t('login.title')}
+          subtitle={t('login.subtitle')}
         />
         <LoginForm />
       </div>

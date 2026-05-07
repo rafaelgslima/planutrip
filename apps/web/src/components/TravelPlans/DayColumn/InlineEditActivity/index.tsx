@@ -1,4 +1,5 @@
 import { useState, useEffect, type ChangeEvent } from "react";
+import { useTranslation } from "react-i18next";
 import { MdClose, MdCheck, MdDelete } from "react-icons/md";
 import { TIME_OPTIONS } from "@/utils/timeOptions";
 import type { InlineEditActivityProps } from "./types";
@@ -12,6 +13,7 @@ export function InlineEditActivity({
   onDelete,
   onClearError,
 }: InlineEditActivityProps) {
+  const { t } = useTranslation('travel-plans');
   const [value, setValue] = useState(initialValue);
   const [time, setTime] = useState<string>(initialTime ?? "");
   const [localError, setLocalError] = useState("");
@@ -27,7 +29,7 @@ export function InlineEditActivity({
   const handleSave = () => {
     const trimmed = value.trim();
     if (!trimmed) {
-      setLocalError("Required");
+      setLocalError(t('inlineEditActivity.required'));
       return;
     }
     onSave(trimmed, time || null);
@@ -60,7 +62,7 @@ export function InlineEditActivity({
         onChange={(e) => setTime(e.target.value)}
         className="tf-input text-[12px] text-tf-muted"
       >
-        <option value="">No time</option>
+        <option value="">{t('inlineEditActivity.noTime')}</option>
         {TIME_OPTIONS.map((opt) => (
           <option key={opt.value} value={opt.value}>
             {opt.label}
@@ -78,7 +80,7 @@ export function InlineEditActivity({
           type="button"
           onClick={onCancel}
           className="shrink-0 w-8 h-8 flex items-center justify-center rounded-[7px] border border-tf-border bg-transparent text-tf-muted hover:text-tf-text hover:border-white/15 cursor-pointer transition-colors duration-150"
-          aria-label="Cancel"
+          aria-label={t('inlineEditActivity.cancelButton')}
         >
           <MdClose size={11} aria-hidden="true" />
         </button>
@@ -87,17 +89,17 @@ export function InlineEditActivity({
           type="button"
           onClick={handleSave}
           className="flex-1 h-8 flex items-center justify-center gap-1 rounded-[7px] bg-tf-amber text-[#0E0B09] text-[11px] font-semibold border-none cursor-pointer transition-opacity duration-150 hover:opacity-90 font-outfit"
-          aria-label="Save changes"
+          aria-label={t('inlineEditActivity.saveChanges')}
         >
           <MdCheck size={11} aria-hidden="true" />
-          Save
+          {t('inlineEditActivity.saveButton')}
         </button>
 
         <button
           type="button"
           onClick={onDelete}
           className="shrink-0 w-8 h-8 flex items-center justify-center rounded-[7px] border border-red-500/25 bg-red-500/10 text-red-300 hover:bg-red-500/20 cursor-pointer transition-colors duration-150"
-          aria-label="Delete activity"
+          aria-label={t('inlineEditActivity.deleteActivity')}
         >
           <MdDelete size={12} aria-hidden="true" />
         </button>

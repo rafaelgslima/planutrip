@@ -2,13 +2,16 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useState } from "react";
 import { MdMenu, MdClose } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 import { Logo } from "@/components/Logo";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import { supabase } from "@/lib/supabase";
 import { SessionTimeoutWarning } from "@/components/SessionTimeoutWarning";
 import { useSessionTimeoutWarning } from "@/hooks/useSessionTimeoutWarning";
 
 export function HeaderPostLogin() {
   const router = useRouter();
+  const { t } = useTranslation('common');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Session timeout configuration from environment variables
@@ -57,25 +60,28 @@ export function HeaderPostLogin() {
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-1">
-            <div className={`py-1.5 px-3 rounded-lg transition-all duration-150 ${router.pathname === "/home" ? "bg-white/10" : "hover:bg-white/10"}`}><Link href="/home" className="text-sm font-medium text-tf-text no-underline font-outfit">My trips</Link></div>
-            <div className={`py-1.5 px-3 rounded-lg transition-all duration-150 ${router.pathname === "/past-trips" ? "bg-white/10" : "hover:bg-white/10"}`}><Link href="/past-trips" className="text-sm font-medium text-tf-text no-underline font-outfit">Past trips</Link></div>
-            <div className={`py-1.5 px-3 rounded-lg transition-all duration-150 ${router.pathname === "/profile" ? "bg-white/10" : "hover:bg-white/10"}`}><Link href="/profile" className="text-sm font-medium text-tf-text no-underline font-outfit">Profile</Link></div>
-            <div className={`py-1.5 px-3 rounded-lg transition-all duration-150 ${router.pathname === "/contact" ? "bg-white/10" : "hover:bg-white/10"}`}><Link href="/contact" className="text-sm font-medium text-tf-text no-underline font-outfit">Contact</Link></div>
+            <div className={`py-1.5 px-3 rounded-lg transition-all duration-150 ${router.pathname === "/home" ? "bg-white/10" : "hover:bg-white/10"}`}><Link href="/home" className="text-sm font-medium text-tf-text no-underline font-outfit">{t('nav.myTrips')}</Link></div>
+            <div className={`py-1.5 px-3 rounded-lg transition-all duration-150 ${router.pathname === "/past-trips" ? "bg-white/10" : "hover:bg-white/10"}`}><Link href="/past-trips" className="text-sm font-medium text-tf-text no-underline font-outfit">{t('nav.pastTrips')}</Link></div>
+            <div className={`py-1.5 px-3 rounded-lg transition-all duration-150 ${router.pathname === "/profile" ? "bg-white/10" : "hover:bg-white/10"}`}><Link href="/profile" className="text-sm font-medium text-tf-text no-underline font-outfit">{t('nav.profile')}</Link></div>
+            <div className={`py-1.5 px-3 rounded-lg transition-all duration-150 ${router.pathname === "/contact" ? "bg-white/10" : "hover:bg-white/10"}`}><Link href="/contact" className="text-sm font-medium text-tf-text no-underline font-outfit">{t('nav.contact')}</Link></div>
             <button type="button" onClick={handleLogout} className="tf-btn-logout">
-              Log out
+              {t('nav.logOut')}
             </button>
+            <LanguageSelector className="ml-2" />
           </div>
 
           {/* Mobile hamburger */}
-          <button
-            type="button"
-            className="md:hidden p-2 rounded-lg text-tf-muted bg-transparent border-none cursor-pointer"
-            aria-label="Open menu"
-            aria-expanded={isMobileMenuOpen}
-            onClick={handleMobileMenuToggle}
-          >
-            <MdMenu size={20} />
-          </button>
+          <div className="md:hidden">
+            <button
+              type="button"
+              className="p-2 rounded-lg text-tf-muted bg-transparent border-none cursor-pointer"
+              aria-label={t('nav.openMenu')}
+              aria-expanded={isMobileMenuOpen}
+              onClick={handleMobileMenuToggle}
+            >
+              <MdMenu size={20} />
+            </button>
+          </div>
         </nav>
       </header>
 
@@ -91,7 +97,7 @@ export function HeaderPostLogin() {
             <Logo />
             <button
               type="button"
-              aria-label="Close menu"
+              aria-label={t('nav.closeMenu')}
               onClick={handleMobileMenuClose}
               className="p-2 rounded-lg text-tf-muted bg-transparent border-none cursor-pointer"
             >
@@ -101,17 +107,20 @@ export function HeaderPostLogin() {
 
           <div className="flex-1 flex flex-col justify-between p-8 px-6">
             <div className="flex flex-col gap-1">
-              <div className={`py-[14px] px-4 rounded-xl transition-all duration-150 ${router.pathname === "/home" ? "bg-white/10" : "hover:bg-white/10"}`}><Link href="/home" onClick={handleMobileMenuClose} className="block text-[18px] font-medium text-tf-text no-underline font-outfit">My trips</Link></div>
-              <div className={`py-[14px] px-4 rounded-xl transition-all duration-150 ${router.pathname === "/past-trips" ? "bg-white/10" : "hover:bg-white/10"}`}><Link href="/past-trips" onClick={handleMobileMenuClose} className="block text-[18px] font-medium text-tf-text no-underline font-outfit">Past trips</Link></div>
-              <div className={`py-[14px] px-4 rounded-xl transition-all duration-150 ${router.pathname === "/profile" ? "bg-white/10" : "hover:bg-white/10"}`}><Link href="/profile" onClick={handleMobileMenuClose} className="block text-[18px] font-medium text-tf-text no-underline font-outfit">Profile</Link></div>
-              <div className={`py-[14py] px-4 rounded-xl transition-all duration-150 ${router.pathname === "/contact" ? "bg-white/10" : "hover:bg-white/10"}`}><Link href="/contact" onClick={handleMobileMenuClose} className="block text-[18px] font-medium text-tf-text no-underline font-outfit">Contact</Link></div>
+              <div className={`py-[14px] px-4 rounded-xl transition-all duration-150 ${router.pathname === "/home" ? "bg-white/10" : "hover:bg-white/10"}`}><Link href="/home" onClick={handleMobileMenuClose} className="block text-[18px] font-medium text-tf-text no-underline font-outfit">{t('nav.myTrips')}</Link></div>
+              <div className={`py-[14px] px-4 rounded-xl transition-all duration-150 ${router.pathname === "/past-trips" ? "bg-white/10" : "hover:bg-white/10"}`}><Link href="/past-trips" onClick={handleMobileMenuClose} className="block text-[18px] font-medium text-tf-text no-underline font-outfit">{t('nav.pastTrips')}</Link></div>
+              <div className={`py-[14px] px-4 rounded-xl transition-all duration-150 ${router.pathname === "/profile" ? "bg-white/10" : "hover:bg-white/10"}`}><Link href="/profile" onClick={handleMobileMenuClose} className="block text-[18px] font-medium text-tf-text no-underline font-outfit">{t('nav.profile')}</Link></div>
+              <div className={`py-[14px] px-4 rounded-xl transition-all duration-150 ${router.pathname === "/contact" ? "bg-white/10" : "hover:bg-white/10"}`}><Link href="/contact" onClick={handleMobileMenuClose} className="block text-[18px] font-medium text-tf-text no-underline font-outfit">{t('nav.contact')}</Link></div>
+              <div className="py-[14px] px-4 mt-4 border-t border-tf-border">
+                <LanguageSelector className="w-full" />
+              </div>
             </div>
             <button
               type="button"
               onClick={handleLogout}
               className="tf-btn-ghost w-full"
             >
-              Log out
+              {t('nav.logOut')}
             </button>
           </div>
         </div>

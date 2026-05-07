@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 import { MdEdit, MdClose } from "react-icons/md";
 import { useEditProfileForm } from "@/hooks/useEditProfileForm";
 import type { EditProfileFormProps } from "./types";
 
 export function EditProfileForm({ name, email, onNameUpdated }: EditProfileFormProps) {
+  const { t } = useTranslation('profile');
   const [isEditing, setIsEditing] = useState(false);
   const {
     values,
@@ -36,7 +38,7 @@ export function EditProfileForm({ name, email, onNameUpdated }: EditProfileFormP
         {/* Display name section */}
         <div>
           <div className="text-[11px] font-bold tracking-[0.1em] uppercase text-tf-muted font-outfit mb-4">
-            Display name
+            {t('profile.nameLabel')}
           </div>
           <div className="flex items-center justify-between">
             <div className="text-sm text-tf-text font-outfit font-medium">
@@ -45,10 +47,10 @@ export function EditProfileForm({ name, email, onNameUpdated }: EditProfileFormP
             <button
               onClick={() => setIsEditing(true)}
               className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-tf-amber font-outfit hover:text-tf-amber/80 transition-colors"
-              aria-label="Edit display name"
+              aria-label={t('profile.editProfile')}
             >
               <MdEdit className="w-4 h-4" />
-              Edit
+              {t('profile.editProfile')}
             </button>
           </div>
         </div>
@@ -56,13 +58,13 @@ export function EditProfileForm({ name, email, onNameUpdated }: EditProfileFormP
         {/* Change password section */}
         <div className="pt-5 border-t border-tf-border">
           <div className="text-[11px] font-bold tracking-[0.1em] uppercase text-tf-muted font-outfit mb-4">
-            Password
+            {t('account.accountSettings')}
           </div>
           <Link
             href={`/forgot-password?email=${encodeURIComponent(email)}`}
             className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-tf-text font-outfit bg-tf-card border border-tf-border rounded-lg hover:border-tf-amber/50 hover:bg-[rgba(215,149,84,0.04)] transition-colors"
           >
-            Change password
+            {t('account.changePassword')}
           </Link>
         </div>
       </div>
@@ -72,7 +74,7 @@ export function EditProfileForm({ name, email, onNameUpdated }: EditProfileFormP
   return (
     <form onSubmit={handleFormSubmit} className="flex flex-col gap-4">
       <div className="text-[11px] font-bold tracking-[0.1em] uppercase text-tf-muted font-outfit mb-2">
-        Edit display name
+        {t('profile.editProfile')}
       </div>
 
       {/* Name input */}
@@ -82,7 +84,7 @@ export function EditProfileForm({ name, email, onNameUpdated }: EditProfileFormP
           value={values.name}
           onChange={(e) => handleChange("name", e.target.value)}
           onBlur={() => handleBlur("name")}
-          placeholder="Your name"
+          placeholder={t('profile.namePlaceholder')}
           className={`tf-input${touched.name && errors.name ? " tf-input--error" : ""}`}
           aria-invalid={touched.name && !!errors.name}
           aria-describedby={touched.name && errors.name ? "name-error" : undefined}
@@ -97,7 +99,7 @@ export function EditProfileForm({ name, email, onNameUpdated }: EditProfileFormP
       {/* Success message */}
       {isSuccess && (
         <div className="tf-alert-success" role="alert">
-          Profile updated successfully
+          {t('profile.profileUpdated')}
         </div>
       )}
 
@@ -118,11 +120,11 @@ export function EditProfileForm({ name, email, onNameUpdated }: EditProfileFormP
         >
           {isSubmitting ? (
             <>
-              <span className="sr-only">Saving profile, please wait</span>
-              <span aria-hidden="true">Saving…</span>
+              <span className="sr-only">{t('profile.saving')}</span>
+              <span aria-hidden="true">{t('profile.saving')}</span>
             </>
           ) : (
-            "Save"
+            t('profile.save')
           )}
         </button>
         <button
@@ -130,7 +132,7 @@ export function EditProfileForm({ name, email, onNameUpdated }: EditProfileFormP
           onClick={handleCancel}
           disabled={isSubmitting}
           className="flex items-center justify-center w-11 h-11 rounded-lg border border-tf-border text-tf-muted hover:text-tf-text hover:border-tf-border/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Cancel editing"
+          aria-label={t('profile.cancel')}
         >
           <MdClose className="w-5 h-5" />
         </button>

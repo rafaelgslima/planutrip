@@ -1,0 +1,41 @@
+{
+  "hero": {
+    "eyebrow": "Collaborative travel planning",
+    "headline1": "Plan trips",
+    "headline2": "that feel like",
+    "headline3": "adventures.",
+    "subtext": "Create day-by-day itineraries, invite your travel crew, and coordinate every detail together — from anywhere.",
+    "startForFree": "Start for free",
+    "seeHowItWorks": "See how it works →"
+  },
+  "simplicity": {
+    "eyebrow": "Seriously simple",
+    "headline1": "Just your name",
+    "headline2": "and email.",
+    "description": "No endless forms. No unnecessary data collection. In 30 seconds, you're planning your next adventure. That's it.",
+    "privacyFirst": "Privacy first.",
+    "privacyDescription": "Your data is yours.",
+    "alwaysFree": "Always free.",
+    "alwaysFreeDescription": "No credit card required. Plan unlimited trips."
+  },
+  "features": {
+    "eyebrow": "Everything you need",
+    "headline1": "Built for the way",
+    "headline2": "you actually travel.",
+    "dayByDay": "Day-by-day itineraries",
+    "dayByDayDesc": "Organize every trip with detailed daily schedules. Add activities, meals, and sights with specific times to keep everyone on track.",
+    "inviteCrew": "Invite your crew",
+    "inviteCrewDesc": "Share plans with friends and family in seconds. Send an email invite and they're in — collaborating on the itinerary instantly.",
+    "editTogether": "Edit together, anytime",
+    "editTogetherDesc": "Every collaborator can add ideas, rearrange activities, and keep the itinerary in sync — whether you're in the same room or across the world."
+  },
+  "cta": {
+    "headline1": "Ready for your next",
+    "headline2": "adventure?",
+    "description": "Create your first trip in under a minute.\nFree, forever.",
+    "createFirstTrip": "Create your first trip →"
+  },
+  "footer": {
+    "copyright": "© {{year}} Planutrip. All rights reserved."
+  }
+}

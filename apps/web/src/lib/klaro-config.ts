@@ -23,6 +23,13 @@ export const klaroConfig = {
   },
   services: [
     {
+      name: 'language-preference',
+      title: 'Language Preference',
+      description: 'Remembers your preferred language across visits.',
+      purposes: ['functional'],
+      required: true,
+    },
+    {
       name: 'google-analytics',
       title: 'Google Analytics',
       description: 'Analytics to help us understand how you use Planutrip',

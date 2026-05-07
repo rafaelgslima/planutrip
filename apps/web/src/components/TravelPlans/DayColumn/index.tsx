@@ -1,5 +1,6 @@
 import { useDroppable } from "@dnd-kit/core";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { MdAdd, MdExpandMore, MdArrowRightAlt } from "react-icons/md";
 import { formatDayHeader } from "@/utils/dateUtils";
 import { toDateOnlyISOString } from "@/utils/toDateOnlyISOString";
@@ -30,6 +31,7 @@ export function DayColumn({
   onToggleDone,
   onMoveUnfinishedToNextDay,
 }: DayColumnProps) {
+  const { t, i18n } = useTranslation('travel-plans');
   const dayString = toDateOnlyISOString(date);
   // Register as a droppable zone so cross-day drags can land on empty columns
   const { setNodeRef, isOver } = useDroppable({ id: dayString });
@@ -124,7 +126,7 @@ export function DayColumn({
           className="text-xs text-tf-muted text-center py-2"
           data-testid="day-plans-loading"
         >
-          Loading…
+          {t('dayColumn.loading', { defaultValue: 'Loading…' })}
         </div>
       );
     }
@@ -143,7 +145,7 @@ export function DayColumn({
     if (items.length === 0 && !isAdding) {
       return (
         <div className="text-xs text-tf-muted text-center py-2">
-          No activities yet
+          {t('dayColumn.noActivities')}
         </div>
       );
     }
@@ -185,7 +187,7 @@ export function DayColumn({
     });
   };
 
-  const { weekday, monthDay } = formatDayHeader(date);
+  const { weekday, monthDay } = formatDayHeader(date, i18n.language);
 
   // Mobile Accordion View
   if (isMobile) {
@@ -199,7 +201,7 @@ export function DayColumn({
         >
           <div>
             <div className="font-outfit font-semibold text-[13px] text-tf-amber tracking-[0.08em] uppercase">
-              Day {dayNumber}
+              {t('dayColumn.dayLabel', { dayNumber, defaultValue: `Day ${dayNumber}` })}
             </div>
             <div className="text-xs text-tf-muted font-outfit mt-[2px]">
               {weekday}, {monthDay}
@@ -235,7 +237,7 @@ export function DayColumn({
                   className="w-full flex items-center justify-center gap-1.5 p-2 border border-dashed border-tf-border-amber rounded-lg bg-transparent text-tf-amber text-xs font-outfit font-medium cursor-pointer opacity-70 transition-opacity duration-150"
                 >
                   <MdAdd size={13} aria-hidden="true" />
-                  Add activity
+                  {t('dayColumn.addActivity')}
                 </button>
                 {shouldShowMoveButton && (
                   <button
@@ -245,7 +247,7 @@ export function DayColumn({
                     className="w-full flex items-center justify-center gap-1.5 p-2 border border-dashed border-tf-border-amber rounded-lg bg-transparent text-tf-amber text-xs font-outfit font-medium cursor-pointer opacity-70 transition-opacity duration-150 enabled:hover:opacity-100 disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     <MdArrowRightAlt size={13} aria-hidden="true" className="flex-shrink-0" />
-                    Move incomplete to next day
+                    {t('dayColumn.moveIncomplete', { defaultValue: 'Move incomplete to next day' })}
                   </button>
                 )}
               </>
@@ -262,7 +264,7 @@ export function DayColumn({
       {/* Day Header */}
       <div className="pb-3 border-b border-tf-border">
         <div className="font-outfit font-semibold text-[11px] text-tf-amber tracking-[0.1em] uppercase mb-[2px]">
-          Day {dayNumber}
+          {t('dayColumn.dayLabel', { dayNumber, defaultValue: `Day ${dayNumber}` })}
         </div>
         <div className="text-[13px] text-tf-text font-outfit font-medium">
           {weekday}
@@ -294,7 +296,7 @@ export function DayColumn({
             className="w-full flex items-center justify-center gap-[5px] py-[7px] border border-dashed border-tf-border-amber rounded-lg bg-transparent text-tf-amber text-xs font-outfit font-medium cursor-pointer opacity-70 transition-opacity duration-150"
           >
             <MdAdd size={12} aria-hidden="true" />
-            Add activity
+            {t('dayColumn.addActivity')}
           </button>
           {shouldShowMoveButton && (
             <button
@@ -304,7 +306,7 @@ export function DayColumn({
               className="w-full flex items-center justify-center gap-[5px] py-[7px] border border-dashed border-tf-border-amber rounded-lg bg-transparent text-tf-amber text-xs font-outfit font-medium cursor-pointer opacity-70 transition-opacity duration-150 enabled:hover:opacity-100 disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <MdArrowRightAlt size={12} aria-hidden="true" className="flex-shrink-0" />
-              Move incomplete to next day
+              {t('dayColumn.moveIncomplete', { defaultValue: 'Move incomplete to next day' })}
             </button>
           )}
         </div>

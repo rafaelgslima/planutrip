@@ -1,9 +1,11 @@
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 import { AuthPageHeader } from "@/components/AuthPageHeader";
 import { ForgotPasswordForm } from "@/components/Form/ForgotPasswordForm";
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
+  const { t } = useTranslation('auth');
   const emailQuery = router.query.email;
   const initialEmail = typeof emailQuery === "string" ? emailQuery : undefined;
 
@@ -24,8 +26,8 @@ export default function ForgotPasswordPage() {
       />
       <div className="w-full max-w-[440px] bg-tf-card border border-tf-border rounded-[20px] p-10 relative z-[1] shadow-[0_24px_64px_rgba(0,0,0,0.3)]">
         <AuthPageHeader
-          title="Reset your password"
-          subtitle="We'll send a reset link to your inbox"
+          title={t('forgotPassword.title')}
+          subtitle={t('forgotPassword.subtitle')}
         />
         <ForgotPasswordForm initialEmail={initialEmail} />
       </div>

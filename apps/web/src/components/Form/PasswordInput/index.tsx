@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import type { PasswordInputProps } from "./types";
 
@@ -17,6 +18,7 @@ export function PasswordInput({
   ariaInvalid = false,
   ariaDescribedBy,
 }: PasswordInputProps) {
+  const { t } = useTranslation('auth');
   const [isRevealed, setIsRevealed] = useState(false);
 
   const handleToggle = () => {
@@ -46,7 +48,7 @@ export function PasswordInput({
         type="button"
         onClick={handleToggle}
         disabled={disabled}
-        aria-label={isRevealed ? "Hide password" : "Show password"}
+        aria-label={isRevealed ? t('passwordInput.hidePassword') : t('passwordInput.showPassword')}
         className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-tf-muted hover:text-tf-amber transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isRevealed ? (

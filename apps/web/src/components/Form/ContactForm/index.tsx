@@ -1,7 +1,9 @@
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 import { useContactForm } from '@/hooks/useContactForm';
 
 export function ContactForm() {
+  const { t } = useTranslation('auth');
   const { values, errors, touched, isSubmitting, isSuccess, handleChange, handleBlur, handleSubmit } =
     useContactForm();
 
@@ -9,13 +11,13 @@ export function ContactForm() {
     return (
       <div className="text-center py-8">
         <div className="mb-4 text-4xl">✓</div>
-        <h2 className="font-outfit text-3xl font-light text-tf-text mb-2">Message Sent!</h2>
+        <h2 className="font-outfit text-3xl font-light text-tf-text mb-2">{t('contact.messageSent')}</h2>
         <p className="text-sm text-tf-muted mb-6">
-          Thank you for reaching out. We&apos;ve received your message and will get back to you soon.
+          {t('contact.messageSentDesc')}
         </p>
         <div className="inline-flex items-center justify-center px-4 py-2 rounded bg-tf-amber-soft border border-tf-border-amber">
           <span className="text-xs text-tf-amber font-outfit font-medium">
-            Check your email for updates
+            {t('contact.checkEmail')}
           </span>
         </div>
       </div>
@@ -27,13 +29,13 @@ export function ContactForm() {
       {/* Name Field */}
       <div>
         <label htmlFor="name" className="tf-label">
-          Name
+          {t('contact.nameLabel')}
         </label>
         <input
           id="name"
           type="text"
           className="tf-input"
-          placeholder="Your name"
+          placeholder={t('contact.namePlaceholder')}
           value={values.name}
           onChange={(e) => handleChange('name', e.target.value)}
           onBlur={() => handleBlur('name')}
@@ -51,13 +53,13 @@ export function ContactForm() {
       {/* Email Field */}
       <div>
         <label htmlFor="email" className="tf-label">
-          Email
+          {t('contact.emailLabel')}
         </label>
         <input
           id="email"
           type="email"
           className="tf-input"
-          placeholder="your.email@example.com"
+          placeholder={t('contact.emailPlaceholder')}
           value={values.email}
           onChange={(e) => handleChange('email', e.target.value)}
           onBlur={() => handleBlur('email')}
@@ -75,13 +77,13 @@ export function ContactForm() {
       {/* Subject Field */}
       <div>
         <label htmlFor="subject" className="tf-label">
-          Subject
+          {t('contact.subjectLabel')}
         </label>
         <input
           id="subject"
           type="text"
           className="tf-input"
-          placeholder="What is this about?"
+          placeholder={t('contact.subjectPlaceholder')}
           value={values.subject}
           onChange={(e) => handleChange('subject', e.target.value)}
           onBlur={() => handleBlur('subject')}
@@ -99,12 +101,12 @@ export function ContactForm() {
       {/* Message Field */}
       <div>
         <label htmlFor="message" className="tf-label">
-          Message
+          {t('contact.messageLabel')}
         </label>
         <textarea
           id="message"
           className="tf-input resize-none"
-          placeholder="Tell us more... (minimum 10 characters)"
+          placeholder={t('contact.messagePlaceholder')}
           rows={5}
           value={values.message}
           onChange={(e) => handleChange('message', e.target.value)}
@@ -127,7 +129,7 @@ export function ContactForm() {
         disabled={isSubmitting}
         aria-busy={isSubmitting}
       >
-        {isSubmitting ? 'Sending...' : 'Send Message'}
+        {isSubmitting ? t('contact.sending') : t('contact.send')}
       </button>
 
       {/* Privacy Note */}

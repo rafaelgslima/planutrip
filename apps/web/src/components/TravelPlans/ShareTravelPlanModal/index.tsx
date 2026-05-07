@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { MdClose, MdAutorenew } from "react-icons/md";
 import type { ShareTravelPlanModalProps } from "./types";
 
@@ -12,6 +13,7 @@ export function ShareTravelPlanModal({
   onConfirm,
   onFriendEmailChange,
 }: ShareTravelPlanModalProps) {
+  const { t } = useTranslation('travel-plans');
   if (!isOpen) return null;
 
   return (
@@ -33,20 +35,20 @@ export function ShareTravelPlanModal({
             {/* Header */}
             <div className="flex items-start justify-between gap-4 mb-1.5">
               <h3 className="font-outfit text-[28px] font-normal text-tf-text tracking-[-0.02em] leading-[1.1]">
-                Share this plan
+                {t('sharing.shareTitle')}
               </h3>
               <button
                 type="button"
                 onClick={onClose}
                 className="bg-transparent border-none cursor-pointer text-tf-muted p-1 shrink-0 mt-1"
-                aria-label="Close modal"
+                aria-label="Close"
               >
                 <MdClose size={18} aria-hidden="true" />
               </button>
             </div>
 
             <p className="text-sm text-tf-muted font-outfit leading-relaxed mb-6">
-              After sharing, your friend will be able to view and edit this plan.
+              {t('sharing.shareSubtitle')}
             </p>
 
             {/* Email Input */}
@@ -55,7 +57,7 @@ export function ShareTravelPlanModal({
                 htmlFor="share-friend-email"
                 className="tf-label"
               >
-                Friend&apos;s email
+                {t('sharing.inviteLabel')}
               </label>
               <input
                 id="share-friend-email"
@@ -63,7 +65,7 @@ export function ShareTravelPlanModal({
                 value={friendEmail}
                 onChange={(event) => onFriendEmailChange(event.target.value)}
                 className={`tf-input${friendEmailError ? " tf-input--error" : ""}`}
-                placeholder="friend@example.com"
+                placeholder={t('sharing.invitePlaceholder')}
               />
               {friendEmailError ? (
                 <p className="text-[13px] text-red-300 mt-1.5 font-outfit">
@@ -74,14 +76,14 @@ export function ShareTravelPlanModal({
               <p className="text-[12px] text-tf-muted font-outfit mt-2.5 flex items-start gap-2">
                 <span className="text-[14px] mt-px shrink-0">ℹ️</span>
                 <span>
-                  They&apos;ll receive one invite email. Their address is used only to send this invite and is stored while the invitation is pending or accepted.{" "}
+                  {t('sharing.privacyNotice')}{" "}
                   <a
                     href="/privacy-policy"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-tf-amber font-medium underline"
                   >
-                    Privacy Policy
+                    {t('sharing.privacyPolicyLink', { defaultValue: 'Privacy Policy' })}
                   </a>
                 </span>
               </p>
@@ -102,7 +104,7 @@ export function ShareTravelPlanModal({
                 onClick={onClose}
                 className="tf-btn-ghost flex-1"
               >
-                Cancel
+                {t('sharing.closeButton')}
               </button>
               <button
                 type="button"
@@ -113,7 +115,7 @@ export function ShareTravelPlanModal({
                 {isSending && (
                   <MdAutorenew size={14} aria-hidden="true" className="animate-spin" />
                 )}
-                {isSending ? "Sending…" : "Send invite"}
+                {isSending ? t('sharing.sending') : t('sharing.sendButton')}
               </button>
             </div>
           </div>

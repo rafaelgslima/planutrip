@@ -21,10 +21,10 @@ describe("DeleteTravelPlanModal", () => {
     render(<DeleteTravelPlanModal {...defaultProps} />);
 
     expect(
-      screen.getByRole("dialog", { name: /delete travel plan/i }),
+      screen.getByRole("dialog", { name: /delete.*travel plan/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: /delete travel plan/i }),
+      screen.getByRole("heading", { name: /delete.*travel plan/i }),
     ).toBeInTheDocument();
   });
 
@@ -38,10 +38,10 @@ describe("DeleteTravelPlanModal", () => {
     render(<DeleteTravelPlanModal {...defaultProps} />);
 
     expect(
-      screen.getByRole("button", { name: /^cancel$/i }),
+      screen.getByRole("button", { name: /no, keep it/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /^delete$/i }),
+      screen.getByRole("button", { name: /yes, delete/i }),
     ).toBeInTheDocument();
   });
 
@@ -49,7 +49,7 @@ describe("DeleteTravelPlanModal", () => {
     render(<DeleteTravelPlanModal {...defaultProps} />);
 
     expect(
-      screen.getByRole("button", { name: /close modal/i }),
+      screen.getByRole("button", { name: /close/i }),
     ).toBeInTheDocument();
   });
 
@@ -57,7 +57,7 @@ describe("DeleteTravelPlanModal", () => {
     const onClose = vi.fn();
     render(<DeleteTravelPlanModal {...defaultProps} onClose={onClose} />);
 
-    fireEvent.click(screen.getByRole("button", { name: /close modal/i }));
+    fireEvent.click(screen.getByRole("button", { name: /close/i }));
 
     expect(onClose).toHaveBeenCalledTimes(1);
   });
@@ -66,7 +66,7 @@ describe("DeleteTravelPlanModal", () => {
     const onClose = vi.fn();
     render(<DeleteTravelPlanModal {...defaultProps} onClose={onClose} />);
 
-    fireEvent.click(screen.getByRole("button", { name: /^cancel$/i }));
+    fireEvent.click(screen.getByRole("button", { name: /no, keep it/i }));
 
     expect(onClose).toHaveBeenCalledTimes(1);
   });
@@ -84,7 +84,7 @@ describe("DeleteTravelPlanModal", () => {
     const onConfirm = vi.fn();
     render(<DeleteTravelPlanModal {...defaultProps} onConfirm={onConfirm} />);
 
-    fireEvent.click(screen.getByRole("button", { name: /^delete$/i }));
+    fireEvent.click(screen.getByRole("button", { name: /yes, delete/i }));
 
     expect(onConfirm).toHaveBeenCalledTimes(1);
   });

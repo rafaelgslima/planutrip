@@ -2,10 +2,13 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { MdMenu, MdClose } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 import { Logo } from "@/components/Logo";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
 export function HeaderPreLogin() {
   const router = useRouter();
+  const { t } = useTranslation('common');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleMobileMenuToggle = () => {
@@ -31,7 +34,7 @@ export function HeaderPreLogin() {
                 href="/contact"
                 className="text-sm font-medium text-tf-text no-underline font-outfit"
               >
-                Contact
+                {t('nav.contact')}
               </Link>
             </div>
             <div
@@ -41,27 +44,30 @@ export function HeaderPreLogin() {
                 href="/login"
                 className="text-sm font-medium text-tf-text no-underline font-outfit"
               >
-                Log in
+                {t('nav.logIn')}
               </Link>
             </div>
             <Link
               href="/signup"
               className="py-[9px] px-5 text-sm font-semibold text-[#0E0B09] bg-tf-amber no-underline rounded-[9px] font-outfit tracking-[-0.01em]"
             >
-              Sign up free
+              {t('nav.signUpFree')}
             </Link>
+            <LanguageSelector className="ml-2" />
           </div>
 
           {/* Mobile hamburger */}
-          <button
-            type="button"
-            className="md:hidden p-2 rounded-lg text-tf-muted bg-transparent border-none cursor-pointer"
-            aria-label="Open menu"
-            aria-expanded={isMobileMenuOpen}
-            onClick={handleMobileMenuToggle}
-          >
-            <MdMenu size={20} />
-          </button>
+          <div className="md:hidden">
+            <button
+              type="button"
+              className="p-2 rounded-lg text-tf-muted bg-transparent border-none cursor-pointer"
+              aria-label={t('nav.openMenu')}
+              aria-expanded={isMobileMenuOpen}
+              onClick={handleMobileMenuToggle}
+            >
+              <MdMenu size={20} />
+            </button>
+          </div>
         </nav>
       </header>
 
@@ -77,7 +83,7 @@ export function HeaderPreLogin() {
             <Logo />
             <button
               type="button"
-              aria-label="Close menu"
+              aria-label={t('nav.closeMenu')}
               onClick={handleMobileMenuClose}
               className="p-2 rounded-lg text-tf-muted bg-transparent border-none cursor-pointer"
             >
@@ -92,11 +98,16 @@ export function HeaderPreLogin() {
               onClick={handleMobileMenuClose}
               className="text-sm text-tf-muted hover:text-tf-text transition-colors no-underline font-outfit"
             >
-              Contact
+              {t('nav.contact')}
             </Link>
 
             {/* Spacer - pushes auth buttons to bottom */}
             <div className="flex-1" />
+
+            {/* Language selector */}
+            <div className="mb-6 pb-6 border-b border-tf-border">
+              <LanguageSelector className="w-full" />
+            </div>
 
             {/* Primary auth actions - prominent and full-width */}
             <div className="flex flex-col gap-3">
@@ -105,14 +116,14 @@ export function HeaderPreLogin() {
                 onClick={handleMobileMenuClose}
                 className="py-3 px-4 rounded-lg border border-white/30 text-center text-base font-semibold text-tf-text no-underline font-outfit transition-all duration-150 hover:bg-white/10 hover:border-white/50"
               >
-                Log in
+                {t('nav.logIn')}
               </Link>
               <Link
                 href="/signup"
                 onClick={handleMobileMenuClose}
                 className="py-3 px-5 text-base font-semibold text-[#0E0B09] bg-tf-amber no-underline rounded-lg font-outfit tracking-[-0.01em] text-center block w-full transition-all duration-150 hover:bg-[#d4a574]"
               >
-                Sign up free
+                {t('nav.signUpFree')}
               </Link>
             </div>
           </div>

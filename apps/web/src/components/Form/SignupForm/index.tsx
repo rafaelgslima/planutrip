@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 import { MdCheckCircle, MdCancel } from "react-icons/md";
 import { useSignupForm } from "@/hooks/useSignupForm";
 import { PasswordInput } from "@/components/Form/PasswordInput";
@@ -8,6 +9,7 @@ import type { SignupFormProps } from "./types";
 
 export function SignupForm({ onSuccess }: SignupFormProps) {
   const router = useRouter();
+  const { t } = useTranslation('auth');
   const {
     values,
     errors,
@@ -54,7 +56,7 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
             htmlFor="name"
             className="tf-label"
           >
-            Full Name{" "}
+            {t('signup.nameLabel')}{" "}
           </label>
           <input
             id="name"
@@ -71,7 +73,7 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
             onChange={(e) => handleChange("name", e.target.value)}
             onBlur={() => handleBlur("name")}
             className={`tf-input${touched.name && errors.name ? " tf-input--error" : ""}`}
-            placeholder="John Doe"
+            placeholder={t('signup.namePlaceholder')}
           />
           {touched.name && errors.name && (
             <p
@@ -90,7 +92,7 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
             htmlFor="email"
             className="tf-label"
           >
-            Email address{" "}
+            {t('signup.emailLabel')}{" "}
           </label>
           <input
             id="email"
@@ -107,7 +109,7 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
             onChange={(e) => handleChange("email", e.target.value)}
             onBlur={() => handleBlur("email")}
             className={`tf-input${touched.email && errors.email ? " tf-input--error" : ""}`}
-            placeholder="you@example.com"
+            placeholder={t('signup.emailPlaceholder')}
           />
           {touched.email && errors.email && (
             <p
@@ -126,7 +128,7 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
             htmlFor="password"
             className="tf-label"
           >
-            Password{" "}
+            {t('signup.passwordLabel')}{" "}
           </label>
           <PasswordInput
             id="password"
@@ -160,7 +162,7 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
           {isPasswordFocused && (
             <div id="password-requirements" className="mt-[10px] flex flex-col gap-1.5">
               <p className="text-[11px] font-semibold text-tf-muted font-outfit uppercase tracking-[0.06em] mb-1">
-                Password must contain:
+                {t('signup.passwordRequirements')}
               </p>
               <div className={`flex items-center gap-2 text-xs font-outfit ${passwordRequirements.minLength ? "text-green-400" : "text-tf-muted"}`}>
                 {passwordRequirements.minLength ? (
@@ -168,7 +170,7 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
                 ) : (
                   <MdCancel className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                 )}
-                <span>At least 8 characters</span>
+                <span>{t('signup.minLength')}</span>
               </div>
               <div className={`flex items-center gap-2 text-xs font-outfit ${passwordRequirements.hasUppercase ? "text-green-400" : "text-tf-muted"}`}>
                 {passwordRequirements.hasUppercase ? (
@@ -176,7 +178,7 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
                 ) : (
                   <MdCancel className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                 )}
-                <span>One uppercase letter</span>
+                <span>{t('signup.hasUppercase')}</span>
               </div>
               <div className={`flex items-center gap-2 text-xs font-outfit ${passwordRequirements.hasLowercase ? "text-green-400" : "text-tf-muted"}`}>
                 {passwordRequirements.hasLowercase ? (
@@ -184,7 +186,7 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
                 ) : (
                   <MdCancel className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                 )}
-                <span>One lowercase letter</span>
+                <span>{t('signup.hasLowercase')}</span>
               </div>
               <div className={`flex items-center gap-2 text-xs font-outfit ${passwordRequirements.hasNumber ? "text-green-400" : "text-tf-muted"}`}>
                 {passwordRequirements.hasNumber ? (
@@ -192,7 +194,7 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
                 ) : (
                   <MdCancel className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                 )}
-                <span>One number</span>
+                <span>{t('signup.hasNumber')}</span>
               </div>
               <div className={`flex items-center gap-2 text-xs font-outfit ${passwordRequirements.hasSpecialChar ? "text-green-400" : "text-tf-muted"}`}>
                 {passwordRequirements.hasSpecialChar ? (
@@ -200,7 +202,7 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
                 ) : (
                   <MdCancel className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                 )}
-                <span>One special character</span>
+                <span>{t('signup.hasSpecialChar')}</span>
               </div>
             </div>
           )}
@@ -212,7 +214,7 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
             htmlFor="confirm-password"
             className="tf-label"
           >
-            Confirm Password{" "}
+            {t('signup.confirmPasswordLabel')}{" "}
           </label>
           <PasswordInput
             id="confirm-password"
@@ -268,23 +270,23 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
         <div>
           <label htmlFor="terms" className="text-[13px] text-tf-muted font-outfit cursor-pointer leading-[1.5]">
             <span id="terms-description">
-              I agree to the{" "}
+              {t('signup.agreeTerms')}{" "}
               <a
                 href="/terms-of-service"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-tf-amber no-underline font-medium hover:underline"
               >
-                Terms of Service
+                {t('signup.termsOfService')}
               </a>
-              {" "}and{" "}
+              {" "}{t('signup.and')}{" "}
               <a
                 href="/privacy-policy"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-tf-amber no-underline font-medium hover:underline"
               >
-                Privacy Policy
+                {t('signup.privacyPolicy')}
               </a>
             </span>
           </label>
@@ -302,13 +304,13 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
 
       <button type="submit" disabled={isSubmitting} aria-busy={isSubmitting} className="tf-btn-primary">
         {isSubmitting ? (
-          <><span className="sr-only">Submitting form, please wait</span><span aria-hidden="true">Creating account…</span></>
-        ) : "Create account"}
+          <><span className="sr-only">{t('signup.submittingForm')}</span><span aria-hidden="true">{t('signup.creatingAccount')}</span></>
+        ) : t('signup.signUp')}
       </button>
 
       {isSuccess && (
         <div className="tf-alert-success" role="alert">
-          <strong>Account created!</strong> We&apos;ve sent a confirmation email to your inbox. Click the link to activate your account.
+          <strong>{t('signup.accountCreated')}</strong> {t('signup.confirmationSent')}
         </div>
       )}
 
@@ -317,9 +319,9 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
       )}
 
       <p className="text-center text-[13px] text-tf-muted font-outfit">
-        Already have an account?{" "}
+        {t('signup.haveAccount')}{" "}
         <Link href={signInHref} className="text-tf-amber no-underline font-medium">
-          Sign in
+          {t('signup.logIn')}
         </Link>
       </p>
     </form>

@@ -19,7 +19,7 @@ describe("CreateTravelPlanModal", () => {
       />,
     );
 
-    expect(screen.queryByPlaceholderText(/paris, tokyo/i)).not.toBeInTheDocument();
+    expect(screen.queryByPlaceholderText(/where are you going/i)).not.toBeInTheDocument();
   });
 
   it("should render modal when isOpen is true", () => {
@@ -34,7 +34,7 @@ describe("CreateTravelPlanModal", () => {
     expect(screen.getByText(/destination/i)).toBeInTheDocument();
     expect(screen.getByText(/start date/i)).toBeInTheDocument();
     expect(screen.getByText(/end date/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/paris, tokyo/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/where are you going/i)).toBeInTheDocument();
   });
 
   it("should call onClose when cancel button is clicked", () => {
@@ -62,7 +62,7 @@ describe("CreateTravelPlanModal", () => {
     );
 
     const destinationInput = screen.getByPlaceholderText(
-      /paris, tokyo/i,
+      /where are you going/i,
     ) as HTMLInputElement;
     fireEvent.change(destinationInput, { target: { value: "Paris" } });
 
@@ -99,7 +99,7 @@ describe("CreateTravelPlanModal", () => {
       />,
     );
 
-    const destinationInput = screen.getByPlaceholderText(/paris, tokyo/i);
+    const destinationInput = screen.getByPlaceholderText(/where are you going/i);
     fireEvent.change(destinationInput, { target: { value: "Paris" } });
 
     const confirmButton = screen.getByRole("button", { name: /create trip/i });
@@ -119,7 +119,7 @@ describe("CreateTravelPlanModal", () => {
     );
 
     act(() => {
-      const destinationInput = screen.getByPlaceholderText(/paris, tokyo/i);
+      const destinationInput = screen.getByPlaceholderText(/where are you going/i);
       fireEvent.change(destinationInput, { target: { value: "Paris" } });
 
       const startDateInput = screen.getByLabelText("Start date") as HTMLInputElement;
@@ -148,7 +148,7 @@ describe("CreateTravelPlanModal", () => {
     );
 
     act(() => {
-      const destinationInput = screen.getByPlaceholderText(/paris, tokyo/i);
+      const destinationInput = screen.getByPlaceholderText(/where are you going/i);
       fireEvent.change(destinationInput, { target: { value: "Paris" } });
 
       const startDateInput = screen.getByLabelText("Start date") as HTMLInputElement;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { MdClose } from "react-icons/md";
 import { validateTravelPlanForm } from "@/utils/validation";
 import type { CreateTravelPlanModalProps } from "./types";
@@ -8,6 +9,7 @@ export function CreateTravelPlanModal({
   onClose,
   onConfirm,
 }: CreateTravelPlanModalProps) {
+  const { t } = useTranslation('travel-plans');
   const [destination, setDestination] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -81,17 +83,17 @@ export function CreateTravelPlanModal({
             <div className="flex items-start justify-between gap-4 mb-7">
               <div>
                 <h3 className="font-outfit text-[32px] font-normal text-tf-text tracking-[-0.02em] leading-[1.1] mb-1">
-                  Plan a new trip
+                  {t('createPlanModal.title')}
                 </h3>
                 <p className="text-[13px] text-tf-muted font-outfit">
-                  Where are you headed?
+                  {t('createPlanModal.subtitle')}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={handleClose}
                 className="bg-transparent border-none cursor-pointer text-tf-muted p-1 shrink-0 mt-1"
-                aria-label="Close modal"
+                aria-label="Close"
               >
                 <MdClose size={18} aria-hidden="true" />
               </button>
@@ -102,7 +104,7 @@ export function CreateTravelPlanModal({
               {/* Destination */}
               <div>
                 <label htmlFor="destination" className="tf-label">
-                  Destination city
+                  {t('createPlanModal.destinationLabel')}
                 </label>
                 <input
                   type="text"
@@ -110,7 +112,7 @@ export function CreateTravelPlanModal({
                   value={destination}
                   onChange={handleDestinationChange}
                   className={`tf-input${errors.destination ? " tf-input--error" : ""}`}
-                  placeholder="Paris, Tokyo, New York…"
+                  placeholder={t('createPlanModal.destinationPlaceholder')}
                 />
                 {errors.destination && (
                   <p className="text-[13px] text-red-300 mt-1.5 font-outfit">
@@ -123,7 +125,7 @@ export function CreateTravelPlanModal({
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label htmlFor="startDate" className="tf-label">
-                    Start date
+                    {t('createPlanModal.startDateLabel')}
                   </label>
                   <input
                     type="date"
@@ -142,7 +144,7 @@ export function CreateTravelPlanModal({
 
                 <div>
                   <label htmlFor="endDate" className="tf-label">
-                    End date
+                    {t('createPlanModal.endDateLabel')}
                   </label>
                   <input
                     type="date"
@@ -168,14 +170,14 @@ export function CreateTravelPlanModal({
                 onClick={handleClose}
                 className="tf-btn-ghost flex-1"
               >
-                Cancel
+                {t('createPlanModal.cancel')}
               </button>
               <button
                 type="button"
                 onClick={handleConfirm}
                 className="tf-btn-primary flex-1"
               >
-                Create trip
+                {t('createPlanModal.createButton')}
               </button>
             </div>
           </div>

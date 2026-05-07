@@ -1,7 +1,9 @@
+import { useTranslation } from "react-i18next";
 import { AuthPageHeader } from "@/components/AuthPageHeader";
 import { ResetPasswordForm } from "@/components/Form/ResetPasswordForm";
 
 export default function ResetPasswordPage() {
+  const { t } = useTranslation('auth');
   return (
     <div className="min-h-screen bg-tf-bg flex flex-col items-center justify-center p-6 relative">
       <div className="grain" aria-hidden="true" />
@@ -19,8 +21,8 @@ export default function ResetPasswordPage() {
       />
       <div className="w-full max-w-[440px] bg-tf-card border border-tf-border rounded-[20px] p-10 relative z-[1] shadow-[0_24px_64px_rgba(0,0,0,0.3)]">
         <AuthPageHeader
-          title="Set a new password"
-          subtitle="Create a strong, secure password for your account"
+          title={t('resetPassword.title')}
+          subtitle={t('resetPassword.subtitle')}
         />
         <ResetPasswordForm />
       </div>

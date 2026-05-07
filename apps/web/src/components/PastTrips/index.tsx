@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { MdAccessTime } from "react-icons/md";
 import { useTravelPlans } from "@/hooks/useTravelPlans";
 import { LoadingSpinner } from "@/components/Loading/LoadingSpinner";
@@ -6,6 +7,7 @@ import { TravelPlansList } from "../TravelPlans/TravelPlansList";
 import type { PastTripsProps } from "./types";
 
 export function PastTrips({}: PastTripsProps = {}) {
+  const { t } = useTranslation('travel-plans');
   const {
     travelPlans,
     isLoading,
@@ -24,17 +26,17 @@ export function PastTrips({}: PastTripsProps = {}) {
         <h2
           className="font-outfit font-normal tracking-[-0.025em] text-tf-text leading-[1.1] mb-1.5 text-[30px]"
         >
-          Past trips
+          {t('pastTrips.heading')}
         </h2>
         <p className="text-sm text-tf-muted font-outfit">
-          A record of your completed adventures
+          {t('pastTrips.subheading')}
         </p>
       </div>
 
       {isLoading && (
         <div className="flex items-center gap-3 py-8" data-testid="past-trips-loading">
           <LoadingSpinner size="lg" className="text-amber-400" />
-          <p className="text-sm text-tf-muted font-outfit">Loading your past trips…</p>
+          <p className="text-sm text-tf-muted font-outfit">{t('pastTrips.loading')}</p>
         </div>
       )}
 
@@ -53,12 +55,12 @@ export function PastTrips({}: PastTripsProps = {}) {
 
           {/* Heading with visual distinction */}
           <h3 className="font-outfit font-normal tracking-[-0.025em] text-tf-text leading-[1.1] mb-3" style={{ fontSize: "clamp(24px, 5vw, 32px)" }}>
-            Your archive is empty
+            {t('pastTrips.noTrips')}
           </h3>
 
           {/* Descriptive text with better hierarchy */}
           <p className="text-[14px] text-tf-muted font-outfit leading-[1.6] max-w-sm mx-auto">
-            When a trip ends, it becomes part of your travel history. Check back here to revisit memories from journeys past.
+            {t('pastTrips.noTripsDesc')}
           </p>
 
           {/* Secondary visual element */}
@@ -70,7 +72,7 @@ export function PastTrips({}: PastTripsProps = {}) {
                 aria-hidden="true"
               />
               <span className="text-xs font-outfit text-tf-muted opacity-70">
-                Your completed adventures await
+                {t('pastTrips.emptyStateHint')}
               </span>
             </div>
           </div>

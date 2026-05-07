@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { MdCheckCircle, MdHourglassBottom } from "react-icons/md";
 import { useTravelPlanShares } from "@/hooks/useTravelPlanShares";
 import type { ShareStatusListProps } from "./types";
@@ -6,6 +7,7 @@ export function ShareStatusList({
   travelPlanId,
   refreshKey = 0,
 }: ShareStatusListProps) {
+  const { t } = useTranslation('travel-plans');
   const { shares, isLoading } = useTravelPlanShares(travelPlanId, refreshKey);
 
   if (isLoading || shares.length === 0) return null;
@@ -31,13 +33,7 @@ export function ShareStatusList({
               <MdHourglassBottom size={10} aria-hidden="true" className="shrink-0 mt-[1px]" />
             )}
             <span className="min-w-0">
-              Shared with{" "}
-              <span className={`${isAccepted ? "font-semibold" : "font-medium break-all"}`}>
-                {displayName}
-              </span>
-              {!isAccepted && (
-                <span className="text-amber-400/60"> — waiting for acceptance</span>
-              )}
+              {isAccepted ? t('shareStatusList.accepted', { name: displayName }) : t('shareStatusList.pending', { email: displayName })}
             </span>
           </div>
         );

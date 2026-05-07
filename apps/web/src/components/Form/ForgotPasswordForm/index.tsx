@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 import { useForgotPasswordForm } from "@/hooks/useForgotPasswordForm";
 import { LoadingSpinner } from "@/components/Loading/LoadingSpinner";
 import type { ForgotPasswordFormProps } from "./types";
 
 export function ForgotPasswordForm({ initialEmail }: ForgotPasswordFormProps) {
+  const { t } = useTranslation('auth');
   const {
     values,
     errors,
@@ -19,7 +21,7 @@ export function ForgotPasswordForm({ initialEmail }: ForgotPasswordFormProps) {
     <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
       {isSuccess && (
         <div className="tf-alert-success" role="alert">
-          Password reset email sent! Check your inbox for instructions.
+          {t('forgotPassword.linkSent')}
         </div>
       )}
       {errors.general && (
@@ -27,11 +29,11 @@ export function ForgotPasswordForm({ initialEmail }: ForgotPasswordFormProps) {
       )}
 
       <p className="text-[13px] text-tf-muted font-outfit leading-relaxed text-center">
-        Enter your email address and we&apos;ll send you a link to reset your password.
+        {t('forgotPassword.description')}
       </p>
 
       <div>
-        <label htmlFor="email" className="tf-label">Email address</label>
+        <label htmlFor="email" className="tf-label">{t('forgotPassword.emailLabel')}</label>
         <input
           id="email"
           name="email"
@@ -43,7 +45,7 @@ export function ForgotPasswordForm({ initialEmail }: ForgotPasswordFormProps) {
           onBlur={handleBlur}
           disabled={isSubmitting || isSuccess}
           className={`tf-input${touched.email && errors.email ? " tf-input--error" : ""}`}
-          placeholder="you@example.com"
+          placeholder={t('forgotPassword.emailPlaceholder')}
         />
         {touched.email && errors.email && (
           <p className="text-xs text-red-300 font-outfit mt-1" role="alert">{errors.email}</p>
@@ -54,14 +56,14 @@ export function ForgotPasswordForm({ initialEmail }: ForgotPasswordFormProps) {
         {isSubmitting ? (
           <>
             <LoadingSpinner size="sm" className="text-stone-900" />
-            Sending…
+            {t('forgotPassword.sendingLink')}
           </>
-        ) : isSuccess ? "Email sent" : "Send reset link"}
+        ) : isSuccess ? t('forgotPassword.linkSent') : t('forgotPassword.sendLink')}
       </button>
 
       <p className="text-center">
         <Link href="/login" className="text-[13px] text-tf-amber no-underline font-outfit">
-          Back to login
+          {t('forgotPassword.backToLogin')}
         </Link>
       </p>
     </form>

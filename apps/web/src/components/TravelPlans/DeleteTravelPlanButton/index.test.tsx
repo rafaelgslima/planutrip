@@ -21,7 +21,7 @@ describe("DeleteTravelPlanButton", () => {
     );
 
     expect(
-      screen.queryByRole("dialog", { name: /delete travel plan/i }),
+      screen.queryByRole("dialog", { name: /delete.*travel plan/i }),
     ).not.toBeInTheDocument();
   });
 
@@ -35,7 +35,7 @@ describe("DeleteTravelPlanButton", () => {
     );
 
     expect(
-      screen.getByRole("dialog", { name: /delete travel plan/i }),
+      screen.getByRole("dialog", { name: /delete.*travel plan/i }),
     ).toBeInTheDocument();
   });
 
@@ -47,10 +47,10 @@ describe("DeleteTravelPlanButton", () => {
     fireEvent.click(
       screen.getByRole("button", { name: /delete this travel plan/i }),
     );
-    fireEvent.click(screen.getByRole("button", { name: /^cancel$/i }));
+    fireEvent.click(screen.getByRole("button", { name: /no, keep it/i }));
 
     expect(
-      screen.queryByRole("dialog", { name: /delete travel plan/i }),
+      screen.queryByRole("dialog", { name: /delete.*travel plan/i }),
     ).not.toBeInTheDocument();
   });
 
@@ -62,10 +62,10 @@ describe("DeleteTravelPlanButton", () => {
     fireEvent.click(
       screen.getByRole("button", { name: /delete this travel plan/i }),
     );
-    fireEvent.click(screen.getByRole("button", { name: /close modal/i }));
+    fireEvent.click(screen.getByRole("button", { name: /close/i }));
 
     expect(
-      screen.queryByRole("dialog", { name: /delete travel plan/i }),
+      screen.queryByRole("dialog", { name: /delete.*travel plan/i }),
     ).not.toBeInTheDocument();
   });
 
@@ -78,13 +78,13 @@ describe("DeleteTravelPlanButton", () => {
     fireEvent.click(
       screen.getByRole("button", { name: /delete this travel plan/i }),
     );
-    fireEvent.click(screen.getByRole("button", { name: /^delete$/i }));
+    fireEvent.click(screen.getByRole("button", { name: /yes, delete/i }));
 
     expect(onDelete).toHaveBeenCalledWith("plan-1");
 
     await waitFor(() => {
       expect(
-        screen.queryByRole("dialog", { name: /delete travel plan/i }),
+        screen.queryByRole("dialog", { name: /delete.*travel plan/i }),
       ).not.toBeInTheDocument();
     });
   });

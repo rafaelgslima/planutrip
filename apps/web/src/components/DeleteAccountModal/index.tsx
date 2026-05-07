@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { MdWarning, MdClose } from "react-icons/md";
 import { useDeleteAccount } from "@/hooks/useDeleteAccount";
 import type { DeleteAccountModalProps } from "./types";
@@ -6,6 +7,7 @@ import type { DeleteAccountModalProps } from "./types";
 const CONFIRMATION_TEXT = "delete my account";
 
 export function DeleteAccountModal({ isOpen, onClose }: DeleteAccountModalProps) {
+  const { t } = useTranslation('profile');
   const [inputValue, setInputValue] = useState("");
   const { deleteAccount, isDeleting, error } = useDeleteAccount();
 
@@ -45,10 +47,10 @@ export function DeleteAccountModal({ isOpen, onClose }: DeleteAccountModalProps)
           <MdWarning className="w-6 h-6 text-red-400 flex-shrink-0 mt-0.5" />
           <div>
             <h2 className="text-lg font-semibold text-tf-text font-outfit mb-1">
-              Delete Account?
+              {t('dangerZone.deleteConfirmTitle')}
             </h2>
             <p className="text-xs text-red-400 font-outfit font-semibold uppercase tracking-wide">
-              This action cannot be undone
+              {t('dangerZone.deleteCannotUndo')}
             </p>
           </div>
         </div>
@@ -56,41 +58,41 @@ export function DeleteAccountModal({ isOpen, onClose }: DeleteAccountModalProps)
         {/* Warning message */}
         <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-4 mb-6">
           <p className="text-xs text-tf-text font-outfit leading-relaxed">
-            <strong>Warning:</strong> Deleting your account will permanently erase all your data, including:
+            <strong>{t('dangerZone.deleteWarningTitle')}:</strong> {t('dangerZone.deleteWarningMessage')}
           </p>
           <ul className="text-xs text-tf-text font-outfit mt-2 ml-2 space-y-1">
-            <li>• All travel plans you created</li>
-            <li>• All itinerary items</li>
-            <li>• All shared travel plan access</li>
-            <li>• Your profile information</li>
+            <li>• {t('dangerZone.deletePlansBullet')}</li>
+            <li>• {t('dangerZone.deleteItemsBullet')}</li>
+            <li>• {t('dangerZone.deleteAccessBullet')}</li>
+            <li>• {t('dangerZone.deleteInfoBullet')}</li>
           </ul>
           <p className="text-xs text-tf-text font-outfit mt-2">
-            You will also be removed from any travel plans shared with you by others.
+            {t('dangerZone.deleteSharedNote')}
           </p>
         </div>
 
         {/* Confirmation input */}
         <div className="mb-6">
           <label className="text-xs text-tf-muted font-outfit font-semibold uppercase tracking-wide mb-2 block">
-            Type &quot;{CONFIRMATION_TEXT}&quot; to confirm
+            {t('dangerZone.deleteConfirmationPrompt').replace(CONFIRMATION_TEXT, `"${CONFIRMATION_TEXT}"`)}
           </label>
           <input
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            placeholder={CONFIRMATION_TEXT}
+            placeholder={t('dangerZone.deleteConfirmationPlaceholder')}
             disabled={isDeleting}
             className="w-full bg-tf-bg border border-tf-border rounded-lg px-4 py-3 text-sm font-outfit text-tf-text placeholder-tf-muted/50 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500/30 transition-all disabled:opacity-50"
             autoComplete="off"
           />
           {inputValue && !isExactMatch && (
             <p className="text-xs text-red-400 font-outfit mt-1">
-              Text does not match. Type exactly: <strong>{CONFIRMATION_TEXT}</strong>
+              {t('dangerZone.deleteConfirmationError')}
             </p>
           )}
           {isExactMatch && (
             <p className="text-xs text-green-400 font-outfit mt-1">
-              ✓ Ready to delete
+              {t('dangerZone.deleteReadyConfirm')}
             </p>
           )}
         </div>
@@ -111,7 +113,7 @@ export function DeleteAccountModal({ isOpen, onClose }: DeleteAccountModalProps)
             disabled={isDeleting}
             className="flex-1 px-4 py-2.5 text-xs font-semibold text-tf-text font-outfit bg-tf-card border border-tf-border rounded-lg hover:border-tf-border/80 hover:bg-tf-card/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Cancel
+            {t('dangerZone.deleteCancelButton')}
           </button>
           <button
             onClick={handleDelete}
@@ -121,11 +123,11 @@ export function DeleteAccountModal({ isOpen, onClose }: DeleteAccountModalProps)
           >
             {isDeleting ? (
               <>
-                <span className="sr-only">Deleting account, please wait</span>
-                <span aria-hidden="true">Deleting…</span>
+                <span className="sr-only">{t('dangerZone.deletingAccount')}</span>
+                <span aria-hidden="true">{t('dangerZone.deletingEllipsis')}</span>
               </>
             ) : (
-              "Delete Account Permanently"
+              t('dangerZone.deleteAccountPermanently')
             )}
           </button>
         </div>

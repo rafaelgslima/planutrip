@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 import { useLoginForm } from "@/hooks/useLoginForm";
 import { LoadingSpinner } from "@/components/Loading/LoadingSpinner";
 import { PasswordInput } from "@/components/Form/PasswordInput";
@@ -7,6 +8,7 @@ import type { LoginFormProps } from "./types";
 
 export function LoginForm(_props: LoginFormProps) {
   const router = useRouter();
+  const { t } = useTranslation('auth');
   const {
     values,
     errors,
@@ -30,7 +32,7 @@ export function LoginForm(_props: LoginFormProps) {
       <div className="flex flex-col gap-4">
         {/* Email */}
         <div>
-          <label htmlFor="email" className="tf-label">Email address</label>
+          <label htmlFor="email" className="tf-label">{t('login.emailLabel')}</label>
           <input
             id="email"
             name="email"
@@ -41,7 +43,7 @@ export function LoginForm(_props: LoginFormProps) {
             onChange={handleChange("email")}
             onBlur={handleBlur("email")}
             className={`tf-input${touched.email && errors.email ? " tf-input--error" : ""}`}
-            placeholder="you@example.com"
+            placeholder={t('login.emailPlaceholder')}
           />
           {touched.email && errors.email && (
             <p className="text-xs text-red-300 font-outfit mt-1">{errors.email}</p>
@@ -51,12 +53,12 @@ export function LoginForm(_props: LoginFormProps) {
         {/* Password */}
         <div>
           <div className="flex items-center justify-between mb-1.5">
-            <label htmlFor="password" className="tf-label mb-0">Password</label>
+            <label htmlFor="password" className="tf-label mb-0">{t('login.passwordLabel')}</label>
             <Link
               href="/forgot-password"
               className="text-xs font-medium text-tf-amber no-underline font-outfit"
             >
-              Forgot password?
+              {t('login.forgotPassword')}
             </Link>
           </div>
           <PasswordInput
@@ -87,7 +89,7 @@ export function LoginForm(_props: LoginFormProps) {
           className="tf-checkbox"
         />
         <label htmlFor="remember-me" className="text-[13px] text-tf-muted font-outfit cursor-pointer">
-          Remember me
+          {t('login.rememberMe')}
         </label>
       </div>
 
@@ -99,17 +101,17 @@ export function LoginForm(_props: LoginFormProps) {
         {isSubmitting ? (
           <>
             <LoadingSpinner size="md" className="text-stone-900" />
-            Signing in…
+            {t('login.loggingIn')}
           </>
         ) : (
-          "Sign in"
+          t('login.logIn')
         )}
       </button>
 
       <p className="text-center text-[13px] text-tf-muted font-outfit">
-        Don&apos;t have an account?{" "}
+        {t('login.noAccount')}{" "}
         <Link href={signupHref} className="text-tf-amber no-underline font-medium">
-          Sign up
+          {t('login.signUp')}
         </Link>
       </p>
     </form>

@@ -40,12 +40,12 @@ describe("ShareTravelPlanModal", () => {
       screen.getByRole("dialog", { name: /share travel plan/i }),
     ).toBeInTheDocument();
     expect(screen.getByLabelText(/friend.*email/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /cancel/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /close modal/i })).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: /send invite/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /close modal/i }),
+      screen.getByRole("button", { name: /close/i }),
     ).toBeInTheDocument();
   });
 
@@ -86,7 +86,7 @@ describe("ShareTravelPlanModal", () => {
       />,
     );
 
-    fireEvent.click(screen.getByRole("button", { name: /close modal/i }));
+    fireEvent.click(screen.getByRole("button", { name: /close/i }));
     fireEvent.click(screen.getByTestId("share-travel-plan-backdrop"));
 
     expect(onClose).toHaveBeenCalledTimes(2);

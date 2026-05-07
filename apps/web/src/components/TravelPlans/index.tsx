@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { MdAdd } from "react-icons/md";
 import { useTravelPlans } from "@/hooks/useTravelPlans";
 import { LoadingSpinner } from "@/components/Loading/LoadingSpinner";
@@ -7,6 +8,7 @@ import { TravelPlansList } from "./TravelPlansList";
 import type { TravelPlansProps } from "./types";
 
 export function TravelPlans({ statusFilter }: TravelPlansProps = {}) {
+  const { t } = useTranslation('travel-plans');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
@@ -43,10 +45,10 @@ export function TravelPlans({ statusFilter }: TravelPlansProps = {}) {
           <h2
             className="font-outfit font-normal tracking-[-0.01em] text-tf-text leading-[1.1] mb-1.5 text-[30px]"
           >
-            My trips
+            {t('plans.myTrips')}
           </h2>
           <p className="text-sm text-tf-muted font-outfit">
-            Your travel itineraries, all in one place
+            {t('dashboard.subtitle')}
           </p>
         </div>
         <button
@@ -54,7 +56,7 @@ export function TravelPlans({ statusFilter }: TravelPlansProps = {}) {
           className="inline-flex items-center gap-2 py-[11px] px-[22px] bg-tf-amber text-[#0E0B09] border-none rounded-[10px] text-sm font-semibold font-outfit cursor-pointer tracking-[-0.01em] shadow-[0_4px_16px_rgba(232,162,58,0.25)]"
         >
           <MdAdd size={16} aria-hidden="true" />
-          New trip
+          {t('dashboard.createNew')}
         </button>
       </div>
 
@@ -63,7 +65,7 @@ export function TravelPlans({ statusFilter }: TravelPlansProps = {}) {
       {isLoading && (
         <div className="flex items-center gap-3 py-8" data-testid="travel-plans-loading">
           <LoadingSpinner size="lg" className="text-amber-400" />
-          <p className="text-sm text-tf-muted font-outfit">Loading your trips…</p>
+          <p className="text-sm text-tf-muted font-outfit">{t('dashboard.loading')}</p>
         </div>
       )}
 
@@ -73,15 +75,9 @@ export function TravelPlans({ statusFilter }: TravelPlansProps = {}) {
 
       {!isLoading && !loadError && travelPlans.length === 0 && (
         <div className="py-[64px] px-6 text-center border border-dashed border-tf-border rounded-[20px]">
-          <p className="text-[15px] text-tf-muted font-outfit mb-5">
-            You don&apos;t have any trips yet.
+          <p className="text-[15px] text-tf-muted font-outfit">
+            {t('dashboard.noPlan')}
           </p>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="py-2.5 px-[22px] bg-tf-amber text-[#0E0B09] border-none rounded-[10px] text-sm font-semibold font-outfit cursor-pointer"
-          >
-            Plan your first trip
-          </button>
         </div>
       )}
 

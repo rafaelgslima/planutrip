@@ -1,10 +1,12 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import { LoadingSpinner } from "@/components/Loading/LoadingSpinner";
 import { Logo } from "@/components/Logo";
 import { useAcceptShareInvite } from "@/hooks/useAcceptShareInvite";
 
 export default function AcceptShareInvitePage() {
+  const { t } = useTranslation('travel-plans');
   const router = useRouter();
 
   const token = useMemo(() => {
@@ -42,10 +44,10 @@ export default function AcceptShareInvitePage() {
     return pageWrapper(
       <>
         <h1 className="font-outfit text-[28px] font-light text-tf-text mb-[10px] text-center">
-          Invalid invite link
+          {t('shareAccept.invalidInviteTitle')}
         </h1>
         <p className="text-sm text-tf-muted font-outfit text-center">
-          This invite link is missing a token. Please check your email and try the link again.
+          {t('shareAccept.invalidInviteMessage')}
         </p>
       </>
     );
@@ -54,33 +56,33 @@ export default function AcceptShareInvitePage() {
   return pageWrapper(
     <>
       <h1 className="font-outfit text-[28px] font-light text-tf-text mb-5 text-center">
-        Accept invitation
+        {t('shareAccept.acceptTitle')}
       </h1>
 
       {status === "loading" && (
         <div className="flex items-center justify-center gap-3">
           <LoadingSpinner size="md" className="text-amber-400" />
           <span className="text-sm text-tf-muted font-outfit">
-            Confirming your invitation…
+            {t('shareAccept.confirming')}
           </span>
         </div>
       )}
 
       {status === "idle" && (
         <p className="text-sm text-tf-muted font-outfit text-center">
-          Preparing to accept invite…
+          {t('shareAccept.preparing')}
         </p>
       )}
 
       {status === "success" && (
         <div className="tf-alert-success text-center">
-          Invitation accepted! Redirecting to your travel plans…
+          {t('shareAccept.success')}
         </div>
       )}
 
       {status === "error" && (
         <div className="tf-alert-error text-center">
-          {errorMessage ?? "Unable to accept invitation. The link may be expired or already used."}
+          {errorMessage ?? t('shareAccept.error')}
         </div>
       )}
     </>

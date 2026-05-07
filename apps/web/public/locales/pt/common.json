@@ -1,0 +1,21 @@
+{
+  "nav": {
+    "myTrips": "Minhas viagens",
+    "pastTrips": "Viagens anteriores",
+    "profile": "Perfil",
+    "contact": "Contato",
+    "logIn": "Entrar",
+    "logOut": "Sair",
+    "signUpFree": "Criar conta",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu"
+  },
+  "buttons": {
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "delete": "Deletar",
+    "confirm": "Confirmar",
+    "close": "Fechar",
+    "back": "Voltar"
+  }
+}

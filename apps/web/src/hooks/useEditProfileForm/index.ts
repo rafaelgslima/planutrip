@@ -22,7 +22,7 @@ export function useEditProfileForm(initialName: string): UseEditProfileFormRetur
     if (initialName && initialName !== values.name) {
       setValues((prev) => ({ ...prev, name: initialName }));
     }
-  }, [initialName, values.name]);
+  }, [initialName]);
 
   const handleChange = useCallback(
     (field: keyof EditProfileFormValues, value: string) => {

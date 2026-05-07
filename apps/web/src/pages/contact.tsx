@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import { useTranslation } from 'react-i18next';
 import { HeaderPreLogin } from '@/components/Header/HeaderPreLogin';
 import { HeaderPostLogin } from '@/components/Header/HeaderPostLogin';
 import { ContactForm } from '@/components/Form/ContactForm';
 import { supabase } from '@/lib/supabase';
 
 export default function ContactPage() {
+  const { t } = useTranslation('auth');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -44,11 +46,10 @@ export default function ContactPage() {
           {/* Header Section */}
           <div className="mb-8 text-center">
             <h1 className="font-outfit text-[30px] font-light tracking-tight text-tf-text mb-3">
-              Get in Touch
+              {t('contact.title')}
             </h1>
             <p className="font-outfit text-sm md:text-base text-tf-muted leading-relaxed">
-              Have an issue? A brilliant feature idea? A complaint? We&apos;d love to hear from you.
-              Send us a message and we&apos;ll get back to you as soon as possible.
+              {t('contact.description')}
             </p>
           </div>
 
@@ -59,7 +60,7 @@ export default function ContactPage() {
 
           {/* Footer Hint */}
           <p className="text-center text-xs text-tf-muted mt-6">
-            All messages are reviewed by our team. Expect a response within 24-48 hours.
+            {t('contact.responseTime')}
           </p>
         </div>
       </main>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { MdCalendarToday, MdPeople, MdEdit } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabase";
 import { HeaderPreLogin } from "@/components/Header/HeaderPreLogin";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -53,6 +54,7 @@ function FeatureCard({ icon, title, description, featured }: FeatureCardProps) {
 /* ── Page ─────────────────────────────────────────────────────────────── */
 export default function Home() {
   const router = useRouter();
+  const { t } = useTranslation('home');
   const [isChecking, setIsChecking] = useState(true);
   useScrollAnimation();
 
@@ -94,14 +96,14 @@ export default function Home() {
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <main className="relative z-[1] pt-[10px]">
-        <section>
+        <section suppressHydrationWarning>
           <div className="max-w-[1200px] mx-auto hero-grid">
             {/* Left: copy */}
             <div>
               {/* Eyebrow pill */}
               <div className="animate-slide-up inline-flex items-center gap-2 py-1.5 px-[14px] rounded-full border border-tf-border-amber bg-tf-amber-soft text-xs font-semibold text-tf-amber font-outfit tracking-[0.04em] uppercase mb-7">
                 <span aria-hidden="true">✦</span>
-                Collaborative travel planning
+                {t('hero.eyebrow')}
               </div>
 
               {/* Headline */}
@@ -112,11 +114,11 @@ export default function Home() {
                   animationDelay: "0.08s",
                 }}
               >
-                Plan trips
+                {t('hero.headline1')}
                 <br />
-                that feel like
+                {t('hero.headline2')}
                 <br />
-                <em className="text-tf-amber italic">adventures.</em>
+                <em className="text-tf-amber italic">{t('hero.headline3')}</em>
               </h1>
 
               {/* Subtext */}
@@ -124,8 +126,7 @@ export default function Home() {
                 className="animate-slide-up text-[17px] text-tf-muted max-w-[440px] mb-10 font-outfit leading-[1.7]"
                 style={{ animationDelay: "0.18s" }}
               >
-                Create day-by-day itineraries, invite your travel crew, and
-                coordinate every detail together — from anywhere.
+                {t('hero.subtext')}
               </p>
 
               {/* CTA row */}
@@ -137,13 +138,13 @@ export default function Home() {
                   href="/signup"
                   className="py-[13px] px-[28px] text-[15px] font-semibold text-[#0E0B09] bg-tf-amber no-underline rounded-[10px] font-outfit tracking-[-0.01em] shadow-[0_4px_24px_rgba(232,162,58,0.3)] inline-block"
                 >
-                  Start for free
+                  {t('hero.startForFree')}
                 </Link>
                 <Link
                   href="#features"
                   className="py-[13px] px-6 text-[15px] font-medium text-tf-muted no-underline rounded-[10px] border border-tf-border font-outfit inline-block"
                 >
-                  See how it works →
+                  {t('hero.seeHowItWorks')}
                 </Link>
               </div>
             </div>
@@ -173,7 +174,7 @@ export default function Home() {
         </section>
 
         {/* ── Simplicity Promise ────────────────────────────────────────── */}
-        <section
+        <section suppressHydrationWarning
           className="py-[80px] border-t border-tf-border"
           data-scroll-section
         >
@@ -183,7 +184,7 @@ export default function Home() {
               className="text-[11px] font-bold tracking-[0.14em] uppercase text-tf-amber font-outfit mb-4"
               data-scroll-animate
             >
-              Seriously simple
+              {t('simplicity.eyebrow')}
             </div>
 
             {/* Headline */}
@@ -192,9 +193,9 @@ export default function Home() {
               style={{ fontSize: "clamp(36px, 4vw, 52px)" }}
               data-scroll-animate
             >
-              Just your name
+              {t('simplicity.headline1')}
               <br />
-              <em className="text-tf-amber">and email.</em>
+              <em className="text-tf-amber">{t('simplicity.headline2')}</em>
             </h2>
 
             {/* Body text */}
@@ -202,8 +203,7 @@ export default function Home() {
               className="text-[16px] text-tf-muted mb-8 font-outfit leading-[1.7]"
               data-scroll-animate
             >
-              No endless forms. No unnecessary data collection. In 30 seconds,
-              you&apos;re planning your next adventure. That&apos;s it.
+              {t('simplicity.description')}
             </p>
 
             {/* Bullet points */}
@@ -222,8 +222,7 @@ export default function Home() {
                   <span className="text-xs font-bold">✓</span>
                 </div>
                 <p className="text-[14px] text-tf-muted font-outfit leading-relaxed">
-                  <strong className="text-tf-text">Privacy first.</strong> Your
-                  data is yours.
+                  <strong className="text-tf-text">{t('simplicity.privacyFirst')}</strong> {t('simplicity.privacyDescription')}
                 </p>
               </div>
               <div className="flex items-start gap-3">
@@ -237,8 +236,7 @@ export default function Home() {
                   <span className="text-xs font-bold">✓</span>
                 </div>
                 <p className="text-[14px] text-tf-muted font-outfit leading-relaxed">
-                  <strong className="text-tf-text">Always free.</strong> No
-                  credit card required. Plan unlimited trips.
+                  <strong className="text-tf-text">{t('simplicity.alwaysFree')}</strong> {t('simplicity.alwaysFreeDescription')}
                 </p>
               </div>
             </div>
@@ -246,7 +244,7 @@ export default function Home() {
         </section>
 
         {/* ── Features ──────────────────────────────────────────────────── */}
-        <section
+        <section suppressHydrationWarning
           id="features"
           className="border-t border-tf-border py-[80px]"
           data-scroll-section
@@ -258,16 +256,16 @@ export default function Home() {
                 className="text-[11px] font-bold tracking-[0.14em] uppercase text-tf-amber font-outfit mb-4"
                 data-scroll-animate
               >
-                Everything you need
+                {t('features.eyebrow')}
               </div>
               <h2
                 className="font-outfit font-normal leading-[1.1] tracking-[-0.025em] text-tf-text"
                 style={{ fontSize: "clamp(36px, 4vw, 54px)" }}
                 data-scroll-animate
               >
-                Built for the way
+                {t('features.headline1')}
                 <br />
-                <em className="text-tf-amber">you actually travel.</em>
+                <em className="text-tf-amber">{t('features.headline2')}</em>
               </h2>
             </div>
 
@@ -276,23 +274,23 @@ export default function Home() {
               <div data-scroll-animate>
                 <FeatureCard
                   icon={<CalendarIcon />}
-                  title="Day-by-day itineraries"
-                  description="Organize every trip with detailed daily schedules. Add activities, meals, and sights with specific times to keep everyone on track."
+                  title={t('features.dayByDay')}
+                  description={t('features.dayByDayDesc')}
                 />
               </div>
               <div data-scroll-animate>
                 <FeatureCard
                   icon={<UsersIcon />}
-                  title="Invite your crew"
-                  description="Share plans with friends and family in seconds. Send an email invite and they're in — collaborating on the itinerary instantly."
+                  title={t('features.inviteCrew')}
+                  description={t('features.inviteCrewDesc')}
                   featured
                 />
               </div>
               <div data-scroll-animate>
                 <FeatureCard
                   icon={<EditIcon />}
-                  title="Edit together, anytime"
-                  description="Every collaborator can add ideas, rearrange activities, and keep the itinerary in sync — whether you're in the same room or across the world."
+                  title={t('features.editTogether')}
+                  description={t('features.editTogetherDesc')}
                 />
               </div>
             </div>
@@ -300,7 +298,7 @@ export default function Home() {
         </section>
 
         {/* ── CTA ───────────────────────────────────────────────────────── */}
-        <section
+        <section suppressHydrationWarning
           className="py-[80px] border-t border-tf-border"
           data-scroll-section
         >
@@ -319,33 +317,31 @@ export default function Home() {
               style={{ fontSize: "clamp(40px, 5vw, 66px)" }}
               data-scroll-animate
             >
-              Ready for your next
+              {t('cta.headline1')}
               <br />
-              <em className="text-tf-amber">adventure?</em>
+              <em className="text-tf-amber">{t('cta.headline2')}</em>
             </h2>
             <p
               className="text-[16px] text-tf-muted mb-9 font-outfit leading-[1.65]"
               data-scroll-animate
             >
-              Create your first trip in under a minute.
-              <br />
-              Free, forever.
+              {t('cta.description')}
             </p>
             <Link
               href="/signup"
               className="py-[15px] px-10 text-[15px] font-semibold text-[#0E0B09] bg-tf-amber no-underline rounded-[10px] font-outfit tracking-[-0.01em] shadow-[0_4px_32px_rgba(232,162,58,0.28)] inline-block"
               data-scroll-animate
             >
-              Create your first trip →
+              {t('cta.createFirstTrip')}
             </Link>
           </div>
         </section>
       </main>
 
       {/* ── Footer ──────────────────────────────────────────────────────── */}
-      <footer className="border-t border-tf-border py-7 px-6 text-center">
+      <footer suppressHydrationWarning className="border-t border-tf-border py-7 px-6 text-center">
         <p className="text-[13px] text-tf-muted font-outfit">
-          © {new Date().getFullYear()} Planutrip. All rights reserved.
+          {t('footer.copyright', { year: new Date().getFullYear() })}
         </p>
       </footer>
     </div>

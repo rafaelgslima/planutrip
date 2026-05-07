@@ -51,7 +51,7 @@ describe("DeleteAccountModal", () => {
     const mockOnClose = vi.fn();
     render(<DeleteAccountModal {...defaultProps} onClose={mockOnClose} />);
 
-    const cancelButton = screen.getByText("Cancel");
+    const cancelButton = screen.getByText("No, keep my account");
     fireEvent.click(cancelButton);
 
     expect(mockOnClose).toHaveBeenCalled();
@@ -126,7 +126,7 @@ describe("DeleteAccountModal", () => {
     render(<DeleteAccountModal {...defaultProps} />);
 
     expect(screen.getByLabelText("Close")).toBeDisabled();
-    expect(screen.getByText("Cancel")).toBeDisabled();
+    expect(screen.getByText("No, keep my account")).toBeDisabled();
     expect(screen.getByText("Deleting…")).toBeInTheDocument();
   });
 

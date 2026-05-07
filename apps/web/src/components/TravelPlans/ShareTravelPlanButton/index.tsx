@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { MdShare } from "react-icons/md";
 import { createTravelPlanShareInvite } from "@/lib/api/travelPlans";
 import { getSupabaseAccessToken } from "@/utils/getSupabaseAccessToken";
@@ -12,6 +13,7 @@ export function ShareTravelPlanButton({
   travelPlanId,
   onShareCreated,
 }: ShareTravelPlanButtonProps) {
+  const { t } = useTranslation('travel-plans');
   const [isOpen, setIsOpen] = useState(false);
   const [friendEmail, setFriendEmail] = useState("");
   const [friendEmailError, setFriendEmailError] = useState<string | null>(null);
@@ -22,15 +24,15 @@ export function ShareTravelPlanButton({
     if (result === "success")
       return {
         type: "success" as const,
-        text: "The plan was shared with the friend and now the friend should confirm it via email to be able to see the plan in their account.",
+        text: t('sharing.inviteSentSuccess'),
       };
     if (result === "error")
       return {
         type: "error" as const,
-        text: "There was an error sending the invitation. Try again later.",
+        text: t('sharing.errorSendingInvite'),
       };
     return null;
-  }, [result]);
+  }, [result, t]);
 
   const handleOpen = useCallback(() => {
     setIsOpen(true);
@@ -91,11 +93,11 @@ export function ShareTravelPlanButton({
       <button
         type="button"
         className="inline-flex items-center gap-1.5 py-2 px-3.5 bg-tf-amber-soft border border-tf-border-amber rounded-[9px] text-[13px] font-semibold text-tf-amber font-outfit cursor-pointer transition-colors duration-150"
-        aria-label="Share this plan with a friend"
+        aria-label={t('sharing.share')}
         onClick={handleOpen}
       >
         <MdShare size={14} aria-hidden="true" />
-        <span>Share</span>
+        <span>{t('sharing.share')}</span>
       </button>
 
       <ShareTravelPlanModal

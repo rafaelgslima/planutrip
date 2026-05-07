@@ -1,0 +1,21 @@
+{
+  "nav": {
+    "myTrips": "My trips",
+    "pastTrips": "Past trips",
+    "profile": "Profile",
+    "contact": "Contact",
+    "logIn": "Log in",
+    "logOut": "Log out",
+    "signUpFree": "Sign up free",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "buttons": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "close": "Close",
+    "back": "Back"
+  }
+}

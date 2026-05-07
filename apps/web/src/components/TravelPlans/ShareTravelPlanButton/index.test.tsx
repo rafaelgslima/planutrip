@@ -40,14 +40,11 @@ describe("ShareTravelPlanButton", () => {
     ).toBeInTheDocument();
     expect(screen.getByLabelText(/friend.*email/i)).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /close modal/i }),
-    ).toBeInTheDocument();
-    expect(
       screen.getByText(
-        /after sharing, your friend will be able to view and edit this plan/i,
+        /invite collaborators to this plan/i,
       ),
     ).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /cancel/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /close modal/i })).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: /send invite/i }),
     ).toBeInTheDocument();
@@ -59,7 +56,7 @@ describe("ShareTravelPlanButton", () => {
     fireEvent.click(
       screen.getByRole("button", { name: /share this plan with a friend/i }),
     );
-    fireEvent.click(screen.getByRole("button", { name: /cancel/i }));
+    fireEvent.click(screen.getByRole("button", { name: /close modal/i }));
 
     expect(
       screen.queryByRole("dialog", { name: /share travel plan/i }),
@@ -72,7 +69,11 @@ describe("ShareTravelPlanButton", () => {
     fireEvent.click(
       screen.getByRole("button", { name: /share this plan with a friend/i }),
     );
-    fireEvent.click(screen.getByRole("button", { name: /close modal/i }));
+
+    // Click the close icon button (aria-label="Close")
+    const closeButtons = screen.getAllByRole("button", { name: /close/i });
+    const closeIconButton = closeButtons.find(btn => btn.getAttribute("aria-label") === "Close");
+    fireEvent.click(closeIconButton!);
 
     expect(
       screen.queryByRole("dialog", { name: /share travel plan/i }),

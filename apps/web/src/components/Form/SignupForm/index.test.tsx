@@ -65,7 +65,7 @@ describe("SignupForm", () => {
   it("should render sign in link", () => {
     render(<SignupForm />);
 
-    const signInLink = screen.getByRole("link", { name: /sign in/i });
+    const signInLink = screen.getByRole("link", { name: /log in/i });
     expect(signInLink).toBeInTheDocument();
     expect(signInLink).toHaveAttribute("href", "/login");
   });

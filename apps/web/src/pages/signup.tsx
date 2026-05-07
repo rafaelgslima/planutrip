@@ -1,7 +1,9 @@
+import { useTranslation } from "react-i18next";
 import { AuthPageHeader } from "@/components/AuthPageHeader";
 import { SignupForm } from "@/components/Form/SignupForm";
 
 export default function SignUpPage() {
+  const { t } = useTranslation('auth');
   return (
     <div className="min-h-screen bg-tf-bg flex flex-col items-center justify-start md:justify-center pt-8 md:pt-0 p-6 relative mt-12">
       <div className="grain" aria-hidden="true" />
@@ -20,8 +22,8 @@ export default function SignUpPage() {
       />
       <div className="w-full max-w-[460px] bg-tf-card border border-tf-border rounded-[20px] p-12 relative z-[1] shadow-[0_24px_64px_rgba(0,0,0,0.3)]">
         <AuthPageHeader
-          title="Create your account"
-          subtitle="Start planning your perfect trip today"
+          title={t('signup.title')}
+          subtitle={t('signup.subtitle')}
         />
         <SignupForm />
       </div>

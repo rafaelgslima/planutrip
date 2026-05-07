@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { getDaysArray, formatDateRange } from "@/utils/dateUtils";
 import { DayColumnsGrid } from "../DayColumnsGrid";
@@ -8,6 +9,7 @@ import { ShareTravelPlanButton } from "../ShareTravelPlanButton";
 import type { TravelPlansListProps } from "./types";
 
 export function TravelPlansList({ plans, onDeletePlan, readOnly = false }: TravelPlansListProps) {
+  const { t, i18n } = useTranslation('travel-plans');
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const [shareRefreshKeys, setShareRefreshKeys] = useState<Record<string, number>>({});
 
@@ -33,7 +35,7 @@ export function TravelPlansList({ plans, onDeletePlan, readOnly = false }: Trave
                     {plan.destination}
                   </h3>
                   <p className="text-[13px] text-tf-muted font-outfit">
-                    {formatDateRange(plan.startDate, plan.endDate)} · {days.length} {days.length === 1 ? "day" : "days"}
+                    {formatDateRange(plan.startDate, plan.endDate, i18n.language)} · {t('plans.days', { count: days.length })}
                   </p>
                 </div>
                 {!readOnly && (

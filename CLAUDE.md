@@ -415,6 +415,31 @@ The **only permitted exceptions** are values that are genuinely impossible to ex
 
 Even then, move everything possible to `className` and keep only the inexpressible properties in `style={{}}`.
 
+### Translations — All UI text must be translated
+
+**CRITICAL: Never hardcode UI text.** All user-facing text in components and pages must use the `useTranslation()` hook and `t()` function from `react-i18next`.
+
+- Import: `const { t } = useTranslation('namespace')` where namespace is one of: `common`, `home`, `auth`, `travel-plans`, `profile`, `legal`.
+- Usage: `<span>{t('key.path')}</span>` — never `<span>English text here</span>`.
+- Translation files: `public/locales/[en|pt]/[namespace].json`.
+- If a text is user-generated (from API, database, form input), it does NOT need to be translated — only hardcoded UI text must be.
+- Add translation keys to **both** the English and Portuguese JSON files when adding new UI text. Failing to translate to Portuguese is incomplete work.
+
+Examples of what MUST be translated:
+- Button labels: "Save", "Cancel", "Share", "Delete"
+- Page headings and section titles
+- Navigation links
+- Form labels and placeholders
+- Error messages rendered directly in UI
+- Placeholder text in form inputs
+- Status messages: "Shared with...", "Waiting for acceptance"
+
+Examples of what does NOT need translation:
+- User names fetched from the database
+- User-entered descriptions and titles
+- Error messages from API responses (these are already localized or generic)
+- Data values: dates, times, numbers (handled by formatters, not i18n)
+
 ### Header Strategy — Single Source of Truth
 
 **All pages must use header components, not hardcoded headers:**
