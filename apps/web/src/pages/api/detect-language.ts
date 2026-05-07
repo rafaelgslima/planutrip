@@ -21,7 +21,7 @@ export default async function handler(
 ) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
-    res.status(405).json({ language: 'en' });
+    res.status(405).json({ language: 'en', detected: false });
     return;
   }
 

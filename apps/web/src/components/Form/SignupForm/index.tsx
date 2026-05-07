@@ -4,7 +4,10 @@ import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 import { MdCheckCircle, MdCancel } from "react-icons/md";
 import { useSignupForm } from "@/hooks/useSignupForm";
+import { useGoogleAuth } from "@/hooks/useGoogleAuth";
 import { PasswordInput } from "@/components/Form/PasswordInput";
+import { GoogleAuthButton } from "@/components/Auth/GoogleAuthButton";
+import { AuthDivider } from "@/components/Auth/AuthDivider";
 import type { SignupFormProps } from "./types";
 
 export function SignupForm({ onSuccess }: SignupFormProps) {
@@ -20,6 +23,7 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
     handleBlur,
     handleSubmit,
   } = useSignupForm();
+  const { isLoading: isGoogleLoading, handleGoogleSignIn } = useGoogleAuth();
 
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
@@ -317,6 +321,13 @@ export function SignupForm({ onSuccess }: SignupFormProps) {
       {errors.general && (
         <div className="tf-alert-error" role="alert">{errors.general}</div>
       )}
+
+      <AuthDivider />
+
+      <GoogleAuthButton
+        isLoading={isGoogleLoading}
+        onClick={handleGoogleSignIn}
+      />
 
       <p className="text-center text-[13px] text-tf-muted font-outfit">
         {t('signup.haveAccount')}{" "}

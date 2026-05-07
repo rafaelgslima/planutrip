@@ -2,8 +2,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
 import { useLoginForm } from "@/hooks/useLoginForm";
+import { useGoogleAuth } from "@/hooks/useGoogleAuth";
 import { LoadingSpinner } from "@/components/Loading/LoadingSpinner";
 import { PasswordInput } from "@/components/Form/PasswordInput";
+import { GoogleAuthButton } from "@/components/Auth/GoogleAuthButton";
+import { AuthDivider } from "@/components/Auth/AuthDivider";
 import type { LoginFormProps } from "./types";
 
 export function LoginForm(_props: LoginFormProps) {
@@ -19,6 +22,7 @@ export function LoginForm(_props: LoginFormProps) {
     handleBlur,
     handleSubmit,
   } = useLoginForm();
+  const { isLoading: isGoogleLoading, handleGoogleSignIn } = useGoogleAuth();
 
   const nextRaw = router.query.next;
   const nextUrl =
@@ -114,6 +118,13 @@ export function LoginForm(_props: LoginFormProps) {
           {t('login.signUp')}
         </Link>
       </p>
+
+      <AuthDivider />
+
+      <GoogleAuthButton
+        isLoading={isGoogleLoading}
+        onClick={handleGoogleSignIn}
+      />
     </form>
   );
 }
