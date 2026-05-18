@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://planutrip.com/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://planutrip.com/pt-br/" />
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://planutrip.com/features</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://planutrip.com/pt-br/recursos" />
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://planutrip.com/about</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://planutrip.com/pt-br/sobre" />
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://planutrip.com/contact</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://planutrip.com/pt-br/contato" />
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://planutrip.com/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://planutrip.com/pt-br/privacidade" />
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://planutrip.com/terms</loc>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://planutrip.com/pt-br/termos" />
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://planutrip.com/pt-br/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://planutrip.com/" />
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://planutrip.com/pt-br/recursos</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://planutrip.com/features" />
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://planutrip.com/pt-br/sobre</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://planutrip.com/about" />
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://planutrip.com/pt-br/contato</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://planutrip.com/contact" />
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://planutrip.com/pt-br/privacidade</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://planutrip.com/privacy" />
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://planutrip.com/pt-br/termos</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://planutrip.com/terms" />
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+</urlset>

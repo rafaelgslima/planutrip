@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useTranslation } from "react-i18next";
 import { HeaderPreLogin } from "@/components/Header/HeaderPreLogin";
 import { useRouter } from "next/router";
@@ -8,6 +9,15 @@ export default function PrivacyPolicyPage() {
   const isLoggedIn = router.query.loggedIn === "true";
 
   return (
+    <>
+      <Head>
+        <title>Privacy Policy - Planutrip | Data Protection & Privacy</title>
+        <meta name="description" content="Planutrip privacy policy. Learn how we protect your data, what information we collect, and your rights regarding your personal information." />
+        <link rel="canonical" href="https://planutrip.com/privacy-policy" />
+        <meta property="og:title" content="Privacy Policy - Planutrip" />
+        <meta property="og:description" content="Read our privacy policy to understand how we protect your personal data" />
+        <meta property="og:url" content="https://planutrip.com/privacy-policy" />
+      </Head>
     <div className="min-h-screen bg-tf-bg">
       {!isLoggedIn && <HeaderPreLogin />}
       <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
@@ -69,5 +79,6 @@ export default function PrivacyPolicyPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

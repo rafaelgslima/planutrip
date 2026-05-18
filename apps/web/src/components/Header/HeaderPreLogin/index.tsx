@@ -28,6 +28,16 @@ export function HeaderPreLogin() {
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-1.5">
             <div
+              className={`py-2 px-4 rounded-lg transition-all duration-150 ${router.pathname === "/features" ? "bg-white/10" : "hover:bg-white/10"}`}
+            >
+              <Link
+                href="/features"
+                className="text-sm font-medium text-tf-text no-underline font-outfit"
+              >
+                {t('nav.features')}
+              </Link>
+            </div>
+            <div
               className={`py-2 px-4 rounded-lg transition-all duration-150 ${router.pathname === "/contact" ? "bg-white/10" : "hover:bg-white/10"}`}
             >
               <Link
@@ -93,6 +103,13 @@ export function HeaderPreLogin() {
 
           <div className="flex flex-col h-full px-6 py-8">
             {/* Secondary navigation - subtle and minimal */}
+            <Link
+              href="/features"
+              onClick={handleMobileMenuClose}
+              className="text-sm text-tf-muted hover:text-tf-text transition-colors no-underline font-outfit mb-3"
+            >
+              {t('nav.features')}
+            </Link>
             <Link
               href="/contact"
               onClick={handleMobileMenuClose}

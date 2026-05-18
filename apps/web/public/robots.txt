@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+Allow: /sitemap.xml
+Disallow: /app/
+Disallow: /api/
+Disallow: /?*sort=
+Disallow: /?*filter=
+Disallow: /*.json$
+Disallow: /*.php$
+Disallow: /admin/
+Crawl-delay: 1
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+Sitemap: https://planutrip.com/sitemap.xml

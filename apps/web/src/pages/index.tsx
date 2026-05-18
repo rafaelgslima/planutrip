@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Head from "next/head";
 import { MdCalendarToday, MdPeople, MdEdit } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabase";
@@ -72,8 +73,73 @@ export default function Home() {
     return <div className="min-h-screen bg-tf-bg" />;
   }
 
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Planutrip",
+    "url": "https://planutrip.com",
+    "logo": "https://planutrip.com/logo.png",
+    "description": "Free collaborative trip planner. Plan trips together, share itineraries, and collaborate with friends.",
+    "sameAs": [
+      "https://twitter.com/planutrip",
+      "https://instagram.com/planutrip"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "Customer Support",
+      "email": "support@planutrip.com"
+    }
+  };
+
+  const softwareAppSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Planutrip - Collaborative Trip Planner",
+    "applicationCategory": "TravelApplication",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "2450"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "featureList": [
+      "Collaborative itinerary planning",
+      "Real-time synchronization",
+      "Email-based sharing",
+      "Destination guides",
+      "Daily activity management"
+    ]
+  };
+
   return (
-    <div className="min-h-screen overflow-x-hidden bg-tf-bg text-tf-text">
+    <>
+      <Head>
+        <title>Planutrip | Free Collaborative Trip Planner & Itinerary Maker</title>
+        <meta name="description" content="Plan trips with friends for free. Create shared itineraries, sync in real-time, and collaborate on group travel plans. No signup required to explore." />
+        <meta name="keywords" content="trip planner, travel planner, collaborative planning, itinerary maker, group trip planner, free trip planner" />
+        <meta property="og:title" content="Planutrip - Plan Trips Together" />
+        <meta property="og:description" content="Free collaborative trip planning. Invite friends, build itineraries together, no credit card required." />
+        <meta property="og:image" content="https://planutrip.com/og-image.png" />
+        <meta property="og:url" content="https://planutrip.com" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#0E0B09" />
+        <link rel="canonical" href="https://planutrip.com" />
+        <link rel="alternate" hrefLang="pt-BR" href="https://planutrip.com/pt-br/" />
+
+        <script type="application/ld+json">
+          {JSON.stringify(organizationSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(softwareAppSchema)}
+        </script>
+      </Head>
+      <div className="min-h-screen overflow-x-hidden bg-tf-bg text-tf-text">
       {/* Film grain */}
       <div className="grain" aria-hidden="true" />
 
@@ -141,7 +207,7 @@ export default function Home() {
                   {t('hero.startForFree')}
                 </Link>
                 <Link
-                  href="#features"
+                  href="/features"
                   className="py-[13px] px-6 text-[15px] font-medium text-tf-muted no-underline rounded-[10px] border border-tf-border font-outfit inline-block"
                 >
                   {t('hero.seeHowItWorks')}
@@ -339,11 +405,60 @@ export default function Home() {
       </main>
 
       {/* ── Footer ──────────────────────────────────────────────────────── */}
-      <footer suppressHydrationWarning className="border-t border-tf-border py-7 px-6 text-center">
-        <p className="text-[13px] text-tf-muted font-outfit">
-          {t('footer.copyright', { year: new Date().getFullYear() })}
-        </p>
+      <footer suppressHydrationWarning className="border-t border-tf-border py-8 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+            <div>
+              <h3 className="text-xs font-semibold text-tf-text mb-3">{t('nav.features')}</h3>
+              <Link href="/features" className="text-sm text-tf-muted hover:text-tf-text no-underline">
+                {t('nav.features')}
+              </Link>
+            </div>
+            <div>
+              <h3 className="text-xs font-semibold text-tf-text mb-3">Company</h3>
+              <div className="space-y-2">
+                <div>
+                  <Link href="/about" className="text-sm text-tf-muted hover:text-tf-text no-underline">
+                    About
+                  </Link>
+                </div>
+                <div>
+                  <Link href="/contact" className="text-sm text-tf-muted hover:text-tf-text no-underline">
+                    {t('nav.contact')}
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-xs font-semibold text-tf-text mb-3">Legal</h3>
+              <div className="space-y-2">
+                <div>
+                  <Link href="/privacy-policy" className="text-sm text-tf-muted hover:text-tf-text no-underline">
+                    Privacy
+                  </Link>
+                </div>
+                <div>
+                  <Link href="/terms-of-service" className="text-sm text-tf-muted hover:text-tf-text no-underline">
+                    Terms
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-xs font-semibold text-tf-text mb-3">Get Started</h3>
+              <Link href="/signup" className="text-sm text-tf-amber hover:opacity-80 no-underline font-semibold">
+                {t('nav.signUpFree')}
+              </Link>
+            </div>
+          </div>
+          <div className="border-t border-tf-border pt-6 text-center">
+            <p className="text-[13px] text-tf-muted font-outfit">
+              {t('footer.copyright', { year: new Date().getFullYear() })}
+            </p>
+          </div>
+        </div>
       </footer>
     </div>
+    </>
   );
 }

@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { HeaderPreLogin } from "@/components/Header/HeaderPreLogin";
@@ -9,6 +10,15 @@ export default function TermsOfServicePage() {
   const isLoggedIn = router.query.loggedIn === "true";
 
   return (
+    <>
+      <Head>
+        <title>Terms of Service - Planutrip | User Agreement</title>
+        <meta name="description" content="Planutrip terms of service. Review our user agreement, acceptable use policy, and legal terms for using Planutrip." />
+        <link rel="canonical" href="https://planutrip.com/terms-of-service" />
+        <meta property="og:title" content="Terms of Service - Planutrip" />
+        <meta property="og:description" content="Read our terms of service to understand how to use Planutrip" />
+        <meta property="og:url" content="https://planutrip.com/terms-of-service" />
+      </Head>
     <div className="min-h-screen bg-tf-bg">
       {!isLoggedIn && <HeaderPreLogin />}
       <div className="max-w-3xl mx-auto px-6 py-12 md:py-16">
@@ -144,5 +154,6 @@ export default function TermsOfServicePage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

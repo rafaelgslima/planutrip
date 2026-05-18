@@ -29,14 +29,92 @@ export default function ContactPage() {
 
   const Header = isLoggedIn ? HeaderPostLogin : HeaderPreLogin;
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://planutrip.com"
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Contact",
+        item: "https://planutrip.com/contact"
+      }
+    ]
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "How do I invite friends to my trip plan?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Click Share on your trip plan and enter your friend's email address. They'll receive an invite they can accept to join as a collaborator."
+        }
+      },
+      {
+        "@type": "Question",
+        name: "Is Planutrip really free?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes, Planutrip is completely free forever. No credit card required, no hidden charges, no premium tiers. All features are free for everyone."
+        }
+      },
+      {
+        "@type": "Question",
+        name: "Can multiple people edit the same trip plan?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes, all collaborators can add, edit, and delete activities. Changes sync in real-time across all devices."
+        }
+      },
+      {
+        "@type": "Question",
+        name: "Is my trip data private and secure?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. We use industry-standard encryption and never sell or share your data. Your privacy is our priority."
+        }
+      },
+      {
+        "@type": "Question",
+        name: "Do collaborators need to create an account?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Invited collaborators can accept the invite and join without signing up. If they want to create their own trips, they can create an account anytime."
+        }
+      }
+    ]
+  };
+
   return (
     <>
       <Head>
-        <title>Get in Touch | Planutrip</title>
+        <title>Contact Us - Planutrip | Support & Feedback</title>
         <meta
           name="description"
-          content="Share feedback, report issues, or suggest features for Planutrip"
+          content="Have a question about Planutrip? Contact our support team directly. Share feedback, report bugs, suggest features—we respond within 24 hours."
         />
+        <link rel="canonical" href="https://planutrip.com/contact" />
+        <link rel="alternate" hrefLang="pt-BR" href="https://planutrip.com/pt-br/contato" />
+        <meta property="og:title" content="Contact Us - Planutrip" />
+        <meta property="og:description" content="Get in touch with Planutrip support team" />
+        <meta property="og:url" content="https://planutrip.com/contact" />
+        <meta name="twitter:card" content="summary" />
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(faqSchema)}
+        </script>
       </Head>
 
       <Header />
