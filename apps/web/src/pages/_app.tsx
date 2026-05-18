@@ -1,4 +1,5 @@
 import type { AppProps } from "next/app";
+import Script from "next/script";
 import { Cormorant_Garamond, Outfit, Poppins } from "next/font/google";
 import { Suspense, useEffect } from "react";
 import { I18nextProvider } from "react-i18next";
@@ -78,7 +79,24 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <I18nextProvider i18n={i18n}>
+    <>
+      <Script
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=G-65BJGT3E6P"
+      />
+      <Script
+        id="google-analytics"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-65BJGT3E6P');
+          `,
+        }}
+      />
+      <I18nextProvider i18n={i18n}>
       <Suspense fallback={<div className={`${cormorant.variable} ${outfit.variable} ${poppins.variable} font-outfit min-h-screen bg-tf-bg`} />}>
         <div className={`${cormorant.variable} ${outfit.variable} ${poppins.variable} font-outfit`}>
           <ClientOnly>
@@ -86,6 +104,7 @@ export default function App({ Component, pageProps }: AppProps) {
           </ClientOnly>
         </div>
       </Suspense>
-    </I18nextProvider>
+      </I18nextProvider>
+    </>
   );
 }
