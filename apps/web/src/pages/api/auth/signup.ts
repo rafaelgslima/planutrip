@@ -47,11 +47,16 @@ export default async function handler(
     });
 
     if (error) {
+      console.error("[signup] Supabase auth error:", {
+        message: error.message,
+        status: error.status,
+      });
       throw new ValidationError(error.message);
     }
 
     if (!data.user) {
-      throw new Error("Failed to create account.");
+      console.error("[signup] No user returned from signUp:", { data });
+      throw new Error("Failed to create account. Please try again.");
     }
 
     const serviceSupabase = getSupabaseAdminClient();
@@ -61,10 +66,13 @@ export default async function handler(
         terms_accepted_at: new Date().toISOString(),
         privacy_policy_version: "1.0",
       })
-      .eq("user_id", data.user.id);
+      .eq("id", data.user.id);
 
     if (updateError) {
-      console.error("[signup] Failed to update profile with consent:", updateError);
+      console.error("[signup] Failed to update profile with consent:", {
+        message: updateError.message,
+        details: updateError.details,
+      });
     }
 
     await logAuditEvent(data.user.id, "account.created");
