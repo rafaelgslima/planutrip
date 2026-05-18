@@ -5,6 +5,7 @@ import {
   validateName,
   validatePasswordMatch,
 } from "@/utils/validation";
+import { analytics } from "@/lib/analytics";
 import type {
   SignupFormValues,
   SignupFormErrors,
@@ -181,6 +182,9 @@ export function useSignupForm(
 
       // Success!
       setIsSuccess(true);
+
+      // Track signup conversion in GA4
+      analytics.signupComplete();
 
       // Call optional onSubmit callback if provided
       if (onSubmit) {

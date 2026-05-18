@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { ContactFormValues, ContactFormErrors } from '@/components/Form/ContactForm/types';
 import { UseContactFormReturn } from './types';
 import { validateContactForm } from '@/utils/contactFormValidation';
+import { analytics } from '@/lib/analytics';
 
 export function useContactForm(): UseContactFormReturn {
   const [values, setValues] = useState<ContactFormValues>({
@@ -68,6 +69,10 @@ export function useContactForm(): UseContactFormReturn {
       }
 
       setIsSuccess(true);
+
+      // Track contact form submission in GA4
+      analytics.contactFormSubmitted();
+
       setValues({
         name: '',
         email: '',

@@ -7,6 +7,7 @@ import {
 import type { TravelPlan } from "@/components/TravelPlans/types";
 import { getSupabaseAccessToken } from "@/utils/getSupabaseAccessToken";
 import { toDateOnlyISOString } from "@/utils/toDateOnlyISOString";
+import { analytics } from "@/lib/analytics";
 import type { UseTravelPlansReturn } from "./types";
 
 function mapApiTravelPlanToUi(travelPlan: {
@@ -78,6 +79,9 @@ export function useTravelPlans(statusFilter?: "active" | "past"): UseTravelPlans
           ...previousTravelPlans,
           mapApiTravelPlanToUi(createdTravelPlan),
         ]);
+
+        // Track trip creation in GA4
+        analytics.tripCreated(createdTravelPlan.destination_city);
       } catch (error) {
         setCreateError("Unable to create travel plan. Please try again.");
         throw error;
