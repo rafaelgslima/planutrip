@@ -46,13 +46,7 @@ export default async function handler(
       },
     });
 
-    console.log("[signup] signUp response:", { error, data });
-
     if (error) {
-      console.error("[signup] Supabase auth error:", {
-        message: error.message,
-        status: error.status,
-      });
       throw new ValidationError(error.message);
     }
 
@@ -60,23 +54,37 @@ export default async function handler(
     let userId: string;
 
     if (!data.user) {
-      // Email confirmation is likely required. Try to find the user by email.
-      console.log("[signup] No user in response. Querying for user by email...", { email });
-
+      // No user in response. Check if the user already exists.
       try {
         const { data: foundUser } = await serviceSupabase.auth.admin.listUsers();
         const user = foundUser?.users.find((u) => u.email === email);
 
         if (user) {
-          userId = user.id;
-          console.log("[signup] User found by email after signup:", { userId, email });
+          // User exists. Check if they were just created (email confirmation) or created earlier (duplicate signup)
+          const createdAt = new Date(user.created_at || 0).getTime();
+          const now = Date.now();
+          const secondsSinceCreation = (now - createdAt) / 1000;
+
+          if (secondsSinceCreation < 10) {
+            // User was created within the last 10 seconds - this is email confirmation required
+            userId = user.id;
+          } else if (user.email_confirmed_at) {
+            // Email is confirmed - they already have a full account
+            throw new ValidationError("This email is already registered. Please log in or use a different email.");
+          } else {
+            // Email not confirmed and created > 10 seconds ago - duplicate signup attempt
+            throw new ValidationError("This email was already used to create an account. Please check your email for the confirmation link.");
+          }
         } else {
+          // User doesn't exist - signup failed for unknown reason
           throw new ValidationError(
             "Account creation failed. Please try again or contact support.",
           );
         }
       } catch (err) {
-        console.error("[signup] Failed to find user after signup:", err);
+        if (err instanceof ValidationError) {
+          throw err;
+        }
         throw new ValidationError(
           "Account creation failed. Please try again or contact support.",
         );
@@ -86,28 +94,21 @@ export default async function handler(
     }
 
     try {
-      const { error: updateError } = await serviceSupabase
+      await serviceSupabase
         .from("profile")
         .update({
           terms_accepted_at: new Date().toISOString(),
           privacy_policy_version: "1.0",
         })
         .eq("id", userId);
-
-      if (updateError) {
-        console.error("[signup] Failed to update profile with consent:", {
-          message: updateError.message,
-          details: updateError.details,
-        });
-      }
-    } catch (err) {
-      console.error("[signup] Exception while updating profile consent:", err);
+    } catch {
+      // Silently fail - consent update is not critical
     }
 
     try {
       await logAuditEvent(userId, "account.created");
-    } catch (err) {
-      console.error("[signup] Exception while logging audit event:", err);
+    } catch {
+      // Silently fail - audit logging is not critical
     }
 
     // Return success regardless of confirmation status
