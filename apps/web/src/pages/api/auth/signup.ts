@@ -46,6 +46,8 @@ export default async function handler(
       },
     });
 
+    console.log("[signup] signUp response:", { error, data });
+
     if (error) {
       console.error("[signup] Supabase auth error:", {
         message: error.message,
@@ -55,27 +57,41 @@ export default async function handler(
     }
 
     if (!data.user) {
-      console.error("[signup] No user returned from signUp:", { data });
-      throw new Error("Failed to create account. Please try again.");
+      console.error("[signup] No user returned from signUp. Email may already exist.", {
+        email,
+        data,
+      });
+      throw new ValidationError(
+        "Email already registered or account creation failed. Please try with a different email.",
+      );
     }
 
     const serviceSupabase = getSupabaseAdminClient();
-    const { error: updateError } = await serviceSupabase
-      .from("profile")
-      .update({
-        terms_accepted_at: new Date().toISOString(),
-        privacy_policy_version: "1.0",
-      })
-      .eq("id", data.user.id);
 
-    if (updateError) {
-      console.error("[signup] Failed to update profile with consent:", {
-        message: updateError.message,
-        details: updateError.details,
-      });
+    try {
+      const { error: updateError } = await serviceSupabase
+        .from("profile")
+        .update({
+          terms_accepted_at: new Date().toISOString(),
+          privacy_policy_version: "1.0",
+        })
+        .eq("id", data.user.id);
+
+      if (updateError) {
+        console.error("[signup] Failed to update profile with consent:", {
+          message: updateError.message,
+          details: updateError.details,
+        });
+      }
+    } catch (err) {
+      console.error("[signup] Exception while updating profile consent:", err);
     }
 
-    await logAuditEvent(data.user.id, "account.created");
+    try {
+      await logAuditEvent(data.user.id, "account.created");
+    } catch (err) {
+      console.error("[signup] Exception while logging audit event:", err);
+    }
 
     res.status(201).json({ userId: data.user.id });
   } catch (error) {
