@@ -56,17 +56,34 @@ export default async function handler(
       throw new ValidationError(error.message);
     }
 
-    if (!data.user) {
-      console.error("[signup] No user returned from signUp. Email may already exist.", {
-        email,
-        data,
-      });
-      throw new ValidationError(
-        "Email already registered or account creation failed. Please try with a different email.",
-      );
-    }
-
     const serviceSupabase = getSupabaseAdminClient();
+    let userId: string;
+
+    if (!data.user) {
+      // Email confirmation is likely required. Try to find the user by email.
+      console.log("[signup] No user in response. Querying for user by email...", { email });
+
+      try {
+        const { data: foundUser } = await serviceSupabase.auth.admin.listUsers();
+        const user = foundUser?.users.find((u) => u.email === email);
+
+        if (user) {
+          userId = user.id;
+          console.log("[signup] User found by email after signup:", { userId, email });
+        } else {
+          throw new ValidationError(
+            "Account creation failed. Please try again or contact support.",
+          );
+        }
+      } catch (err) {
+        console.error("[signup] Failed to find user after signup:", err);
+        throw new ValidationError(
+          "Account creation failed. Please try again or contact support.",
+        );
+      }
+    } else {
+      userId = data.user.id;
+    }
 
     try {
       const { error: updateError } = await serviceSupabase
@@ -75,7 +92,7 @@ export default async function handler(
           terms_accepted_at: new Date().toISOString(),
           privacy_policy_version: "1.0",
         })
-        .eq("id", data.user.id);
+        .eq("id", userId);
 
       if (updateError) {
         console.error("[signup] Failed to update profile with consent:", {
@@ -88,12 +105,16 @@ export default async function handler(
     }
 
     try {
-      await logAuditEvent(data.user.id, "account.created");
+      await logAuditEvent(userId, "account.created");
     } catch (err) {
       console.error("[signup] Exception while logging audit event:", err);
     }
 
-    res.status(201).json({ userId: data.user.id });
+    // Return success regardless of confirmation status
+    res.status(201).json({
+      userId,
+      message: "Account created! Please check your email to confirm your account.",
+    });
   } catch (error) {
     sendError(res, error);
   }
