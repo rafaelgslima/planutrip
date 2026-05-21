@@ -1,8 +1,29 @@
+import { createHmac } from "crypto";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Resend } from "resend";
 
 interface SendEmailResponse {
   success: boolean;
+}
+
+function verifySupabaseWebhookSignature(
+  body: string,
+  signature: string | undefined,
+  secret: string | undefined,
+): boolean {
+  if (!signature || !secret) {
+    return false;
+  }
+
+  try {
+    const computedSignature = createHmac("sha256", secret)
+      .update(body)
+      .digest("base64");
+
+    return signature === computedSignature;
+  } catch {
+    return false;
+  }
 }
 
 export default async function handler(
@@ -15,6 +36,16 @@ export default async function handler(
   }
 
   try {
+    // Verify Supabase webhook signature
+    const signature = req.headers["x-supabase-signature"] as string | undefined;
+    const secret = process.env.SUPABASE_HOOK_SECRET;
+    const bodyString = JSON.stringify(req.body);
+
+    if (!verifySupabaseWebhookSignature(bodyString, signature, secret)) {
+      res.status(401).json({ success: false });
+      return;
+    }
+
     const body = req.body as any;
     const { user, email_data } = body;
 

@@ -1,5 +1,16 @@
 import { Resend } from "resend";
 
+function escapeHtml(text: string): string {
+  const map: Record<string, string> = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  };
+  return text.replace(/[&<>"']/g, (char) => map[char]);
+}
+
 function buildHtml(invitedByEmail: string | null, acceptUrl: string): string {
   const inviter = invitedByEmail ?? "Someone";
   return `<!DOCTYPE html>
@@ -112,6 +123,11 @@ export async function sendContactEmail({
 
   const resend = new Resend(resendApiKey);
 
+  const escapedName = escapeHtml(name);
+  const escapedSubject = escapeHtml(subject);
+  const escapedMessage = escapeHtml(message);
+  const escapedEmail = escapeHtml(email);
+
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
@@ -128,17 +144,17 @@ export async function sendContactEmail({
         <tr>
           <td style="padding:32px;">
             <h1 style="margin:0 0 24px;font-size:20px;color:#111827;border-bottom:1px solid #e5e7eb;padding-bottom:16px;">
-              ${subject}
+              ${escapedSubject}
             </h1>
             <div style="margin:0 0 24px;">
-              <p style="margin:0 0 12px;font-size:15px;color:#374151;"><strong>From:</strong> ${name} (${email})</p>
+              <p style="margin:0 0 12px;font-size:15px;color:#374151;"><strong>From:</strong> ${escapedName} (${escapedEmail})</p>
               <div style="margin:16px 0;padding:16px;background:#f3f4f6;border-left:4px solid #E8A23A;border-radius:4px;">
-                <p style="margin:0;font-size:15px;color:#374151;line-height:1.6;white-space:pre-wrap;">${message}</p>
+                <p style="margin:0;font-size:15px;color:#374151;line-height:1.6;white-space:pre-wrap;">${escapedMessage}</p>
               </div>
             </div>
             <hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb;">
             <p style="margin:0;font-size:12px;color:#9ca3af;">
-              This is an automated contact form submission. Reply to ${email} to contact the sender.
+              This is an automated contact form submission. Reply to ${escapedEmail} to contact the sender.
             </p>
           </td>
         </tr>
@@ -331,7 +347,12 @@ export async function sendBreachNotificationEmail({
   }
 
   const resend = new Resend(resendApiKey);
+  const escapedBreachDate = escapeHtml(breachDate);
   const affectedDataList = affectedData.map((item) => `• ${item}`).join("\n");
+  const escapedRemediationSteps = remediationSteps
+    .split("\n")
+    .map((step) => escapeHtml(step))
+    .join("\n");
 
   const text = `IMPORTANT SECURITY NOTICE
 
@@ -396,20 +417,20 @@ The Planutrip Security Team`;
 
       <div class="section">
         <h3>Incident Details:</h3>
-        <p><strong>Date of Incident:</strong> ${breachDate}</p>
+        <p><strong>Date of Incident:</strong> ${escapedBreachDate}</p>
       </div>
 
       <div class="section">
         <h3>What Data May Have Been Affected:</h3>
         <div class="affected-data">
-          ${affectedData.map((item) => `<p style="margin: 5px 0;">• ${item}</p>`).join("")}
+          ${affectedData.map((item) => `<p style="margin: 5px 0;">• ${escapeHtml(item)}</p>`).join("")}
         </div>
       </div>
 
       <div class="section">
         <h3>What We Have Done:</h3>
         <div class="actions">
-          ${remediationSteps.split("\n").map((step) => `<p style="margin: 5px 0;">${step}</p>`).join("")}
+          ${escapedRemediationSteps.split("\n").map((step) => `<p style="margin: 5px 0;">${step}</p>`).join("")}
         </div>
       </div>
 

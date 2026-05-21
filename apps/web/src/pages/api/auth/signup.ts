@@ -54,7 +54,8 @@ export default async function handler(
     let userId: string;
 
     if (!data.user) {
-      // No user in response. Check if the user already exists.
+      // No user returned from signup - this is an edge case (email already exists or other error)
+      // Attempt to get more information by searching through users (unavoidable for this edge case)
       try {
         const { data: foundUser } = await serviceSupabase.auth.admin.listUsers();
         const user = foundUser?.users.find((u) => u.email === email);
