@@ -9,7 +9,7 @@ export function CreateTravelPlanModal({
   onClose,
   onConfirm,
 }: CreateTravelPlanModalProps) {
-  const { t } = useTranslation('travel-plans');
+  const { t } = useTranslation("travel-plans");
   const [destination, setDestination] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -77,7 +77,10 @@ export function CreateTravelPlanModal({
 
     // Prevent end date from being before start date
     if (startDate && newEndDate && new Date(newEndDate) < new Date(startDate)) {
-      setErrors({ ...errors, endDate: t('createPlanModal.endDateBeforeStart') });
+      setErrors({
+        ...errors,
+        endDate: t("createPlanModal.endDateBeforeStart"),
+      });
       return;
     }
 
@@ -85,6 +88,17 @@ export function CreateTravelPlanModal({
     if (errors.endDate) {
       setErrors({ ...errors, endDate: undefined });
     }
+  };
+
+  const openDatePicker = (e: React.MouseEvent<HTMLInputElement>) => {
+    const input = e.currentTarget as HTMLInputElement & { showPicker?: () => void };
+    if (input.showPicker) {
+      input.showPicker();
+    }
+  };
+
+  const blockKeyboardInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
   };
 
   if (!isOpen) return null;
@@ -103,10 +117,10 @@ export function CreateTravelPlanModal({
             <div className="flex items-start justify-between gap-4 mb-7">
               <div>
                 <h3 className="font-outfit text-[32px] font-normal text-tf-text tracking-[-0.02em] leading-[1.1] mb-1">
-                  {t('createPlanModal.title')}
+                  {t("createPlanModal.title")}
                 </h3>
                 <p className="text-[13px] text-tf-muted font-outfit">
-                  {t('createPlanModal.subtitle')}
+                  {t("createPlanModal.subtitle")}
                 </p>
               </div>
               <button
@@ -124,7 +138,7 @@ export function CreateTravelPlanModal({
               {/* Destination */}
               <div>
                 <label htmlFor="destination" className="tf-label">
-                  {t('createPlanModal.destinationLabel')}
+                  {t("createPlanModal.destinationLabel")}
                 </label>
                 <input
                   type="text"
@@ -132,7 +146,7 @@ export function CreateTravelPlanModal({
                   value={destination}
                   onChange={handleDestinationChange}
                   className={`tf-input${errors.destination ? " tf-input--error" : ""}`}
-                  placeholder={t('createPlanModal.destinationPlaceholder')}
+                  placeholder={t("createPlanModal.destinationPlaceholder")}
                 />
                 {errors.destination && (
                   <p className="text-[13px] text-red-300 mt-1.5 font-outfit">
@@ -145,13 +159,16 @@ export function CreateTravelPlanModal({
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label htmlFor="startDate" className="tf-label">
-                    {t('createPlanModal.startDateLabel')}
+                    {t("createPlanModal.startDateLabel")}
                   </label>
                   <input
                     type="date"
                     id="startDate"
                     value={startDate}
                     onChange={handleStartDateChange}
+                    onClick={openDatePicker}
+                    onKeyDown={blockKeyboardInput}
+                    inputMode="none"
                     min={new Date().toISOString().split("T")[0]}
                     className={`tf-input${errors.startDate ? " tf-input--error" : ""}`}
                   />
@@ -164,13 +181,16 @@ export function CreateTravelPlanModal({
 
                 <div>
                   <label htmlFor="endDate" className="tf-label">
-                    {t('createPlanModal.endDateLabel')}
+                    {t("createPlanModal.endDateLabel")}
                   </label>
                   <input
                     type="date"
                     id="endDate"
                     value={endDate}
                     onChange={handleEndDateChange}
+                    onClick={openDatePicker}
+                    onKeyDown={blockKeyboardInput}
+                    inputMode="none"
                     min={startDate || new Date().toISOString().split("T")[0]}
                     className={`tf-input${errors.endDate ? " tf-input--error" : ""}`}
                   />
@@ -190,14 +210,14 @@ export function CreateTravelPlanModal({
                 onClick={handleClose}
                 className="tf-btn-ghost flex-1"
               >
-                {t('createPlanModal.cancel')}
+                {t("createPlanModal.cancel")}
               </button>
               <button
                 type="button"
                 onClick={handleConfirm}
                 className="tf-btn-primary flex-1"
               >
-                {t('createPlanModal.createButton')}
+                {t("createPlanModal.createButton")}
               </button>
             </div>
           </div>

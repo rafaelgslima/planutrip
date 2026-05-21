@@ -8,6 +8,7 @@ import type { EditProfileFormProps } from "./types";
 export function EditProfileForm({ name, email, onNameUpdated }: EditProfileFormProps) {
   const { t } = useTranslation('profile');
   const [isEditing, setIsEditing] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const {
     values,
     errors,
@@ -24,6 +25,7 @@ export function EditProfileForm({ name, email, onNameUpdated }: EditProfileFormP
     const success = await handleSubmit();
     if (success) {
       onNameUpdated?.(values.name);
+      setShowSuccess(true);
       setIsEditing(false);
     }
   };
@@ -54,6 +56,13 @@ export function EditProfileForm({ name, email, onNameUpdated }: EditProfileFormP
             </button>
           </div>
         </div>
+
+        {/* Success message */}
+        {showSuccess && (
+          <div className="tf-alert-success" role="alert">
+            {t('profile.profileUpdated')}
+          </div>
+        )}
 
         {/* Change password section */}
         <div className="pt-5 border-t border-tf-border">

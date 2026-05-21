@@ -188,6 +188,14 @@ body {
   appearance: none;
   color-scheme: dark;
 }
+
+/* Keep native appearance for date/time inputs to enable picker */
+input[type="date"].tf-input,
+input[type="time"].tf-input {
+  -webkit-appearance: menulist-button !important;
+  appearance: menulist-button !important;
+}
+
 .tf-input:focus {
   border-color: rgba(232, 162, 58, 0.4);
   box-shadow: 0 0 0 3px rgba(232, 162, 58, 0.08);
@@ -200,7 +208,7 @@ body {
   cursor: not-allowed;
 }
 
-/* Fix date input visibility on iOS */
+/* Fix date input visibility on iOS and style calendar icon */
 input[type="date"],
 input[type="time"] {
   color: var(--tf-text) !important;
@@ -208,8 +216,9 @@ input[type="time"] {
 
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="time"]::-webkit-calendar-picker-indicator {
-  filter: invert(1) brightness(0.8);
+  filter: brightness(1.8);
   cursor: pointer;
+  pointer-events: auto;
 }
 .tf-input--error {
   border-color: rgba(239, 68, 68, 0.4) !important;
