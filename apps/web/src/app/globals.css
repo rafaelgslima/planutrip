@@ -199,6 +199,18 @@ body {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* Fix date input visibility on iOS */
+input[type="date"],
+input[type="time"] {
+  color: var(--tf-text) !important;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(0.8);
+  cursor: pointer;
+}
 .tf-input--error {
   border-color: rgba(239, 68, 68, 0.4) !important;
 }

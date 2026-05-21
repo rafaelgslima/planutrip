@@ -40,7 +40,8 @@
     "errorDestinationRequired": "Destino é obrigatório",
     "errorStartDateRequired": "Data de início é obrigatória",
     "errorEndDateRequired": "Data de término é obrigatória",
-    "errorInvalidDates": "A data de término deve ser depois da data de início"
+    "errorInvalidDates": "A data de término deve ser depois da data de início",
+    "endDateBeforeStart": "A data de término deve ser depois da data de início"
   },
   "itinerary": {
     "addActivity": "Adicionar atividade",
@@ -124,9 +125,9 @@
   "shareStatusList": {
     "sharedWith": "Compartilhado com",
     "owner": "Proprietário",
-    "accepted": "✓ Compartilhado com {{name}}",
+    "accepted": "Compartilhado com {{name}}",
     "acceptedBy": "Aceito por {{email}}",
-    "pending": "⏳ Aguardando {{email}}",
+    "pending": "Aguardando {{email}}",
     "pendingDesc": "Convite enviado - aguardando aceitação",
     "removeAccess": "Remover",
     "removing": "Removendo..."

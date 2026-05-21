@@ -126,7 +126,7 @@ export async function acceptTravelPlanShareInvite(
   accessToken: string,
 ): Promise<AcceptTravelPlanShareInviteApiResponse> {
   const response = await apiClient.post<AcceptTravelPlanShareInviteApiResponse>(
-    "/v1/travel-plan-shares/accept",
+    "/travel-plan-shares/accept",
     payload,
     {
       headers: {

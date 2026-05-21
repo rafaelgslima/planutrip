@@ -29,10 +29,10 @@ export function AddDayPlanForm({
       setLocalError(t('inlineEditActivity.errorDescriptionRequired'));
       return;
     }
+    // Don't clear fields here — the parent will hide the form immediately,
+    // causing this component to unmount. Clearing fields synchronously creates
+    // a visual gap where the form appears blank before it's hidden.
     onConfirm(description, time || null);
-    setDescription("");
-    setTime("");
-    setLocalError("");
   };
 
   const handleCancel = () => {

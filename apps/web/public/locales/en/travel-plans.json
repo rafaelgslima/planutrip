@@ -40,7 +40,8 @@
     "errorDestinationRequired": "Destination is required",
     "errorStartDateRequired": "Start date is required",
     "errorEndDateRequired": "End date is required",
-    "errorInvalidDates": "End date must be after start date"
+    "errorInvalidDates": "End date must be after start date",
+    "endDateBeforeStart": "End date must be after start date"
   },
   "itinerary": {
     "addActivity": "Add activity",
@@ -124,9 +125,9 @@
   "shareStatusList": {
     "sharedWith": "Shared with",
     "owner": "Owner",
-    "accepted": "✓ Shared with {{name}}",
+    "accepted": "Shared with {{name}}",
     "acceptedBy": "Accepted by {{email}}",
-    "pending": "⏳ Waiting for {{email}}",
+    "pending": "Waiting for {{email}}",
     "pendingDesc": "Invitation sent - awaiting acceptance",
     "removeAccess": "Remove",
     "removing": "Removing..."

@@ -54,14 +54,34 @@ export function CreateTravelPlanModal({
   };
 
   const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setStartDate(e.target.value);
-    if (errors.startDate) {
-      setErrors({ ...errors, startDate: undefined });
+    const newStartDate = e.target.value;
+    setStartDate(newStartDate);
+
+    // Clear end date error if start date changes
+    if (errors.startDate || errors.endDate) {
+      setErrors({
+        ...errors,
+        startDate: undefined,
+        endDate: undefined,
+      });
+    }
+
+    // If new start date is after current end date, clear the end date
+    if (endDate && newStartDate && new Date(newStartDate) > new Date(endDate)) {
+      setEndDate("");
     }
   };
 
   const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEndDate(e.target.value);
+    const newEndDate = e.target.value;
+
+    // Prevent end date from being before start date
+    if (startDate && newEndDate && new Date(newEndDate) < new Date(startDate)) {
+      setErrors({ ...errors, endDate: t('createPlanModal.endDateBeforeStart') });
+      return;
+    }
+
+    setEndDate(newEndDate);
     if (errors.endDate) {
       setErrors({ ...errors, endDate: undefined });
     }

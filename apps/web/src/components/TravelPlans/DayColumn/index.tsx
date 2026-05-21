@@ -58,11 +58,14 @@ export function DayColumn({
   };
 
   const handleConfirm = async (description: string, time: string | null) => {
+    // Hide the form immediately for better UX — don't wait for the API call
+    setIsAdding(false);
     try {
       await onCreateItem(description, time);
-      setIsAdding(false);
     } catch (error) {
       console.error("Create day plan failed:", error);
+      // If the API call fails, the error will be displayed via createError prop
+      // and the user can try again by clicking "Add activity" again
     }
   };
 
