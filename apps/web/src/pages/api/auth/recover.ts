@@ -6,6 +6,18 @@ interface RecoverResponse {
   message?: string;
 }
 
+function isValidRedirectUrl(url: string | undefined, appBaseUrl: string): boolean {
+  if (!url) return false;
+
+  try {
+    const parsedUrl = new URL(url);
+    const appUrl = new URL(appBaseUrl);
+    return parsedUrl.origin === appUrl.origin;
+  } catch {
+    return false;
+  }
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<RecoverResponse>,
@@ -35,26 +47,26 @@ export default async function handler(
       type: type as any,
     });
 
+    const appBase = process.env.APP_BASE_URL || "http://localhost:3000";
+    const validRedirectUrl = isValidRedirectUrl(next as string, appBase) ? (next as string) : appBase;
+
     if (error || !data.session) {
-      const redirectUrl = next || process.env.APP_BASE_URL || "http://localhost:3000";
-      const errorUrl = `${redirectUrl}#error=invalid_token&error_description=Recovery link is invalid or expired`;
+      const errorUrl = `${validRedirectUrl}#error=invalid_token&error_description=Recovery link is invalid or expired`;
       res.setHeader("Location", errorUrl);
       res.status(302).end();
       return;
     }
 
     // Token is valid, create session and redirect to reset-password with the session
-    const redirectUrl = (next as string) || process.env.APP_BASE_URL || "http://localhost:3000";
-
-    // Redirect to reset-password page with session info in URL
-    const resetUrl = `${redirectUrl}#access_token=${encodeURIComponent(data.session.access_token)}&refresh_token=${encodeURIComponent(data.session.refresh_token)}&expires_in=${data.session.expires_in}&token_type=bearer&type=recovery`;
+    const resetUrl = `${validRedirectUrl}#access_token=${encodeURIComponent(data.session.access_token)}&refresh_token=${encodeURIComponent(data.session.refresh_token)}&expires_in=${data.session.expires_in}&token_type=bearer&type=recovery`;
 
     res.setHeader("Location", resetUrl);
     res.status(302).end();
     return;
   } catch (error) {
-    const next = req.query.next as string || process.env.APP_BASE_URL || "http://localhost:3000";
-    const errorUrl = `${next}#error=server_error&error_description=An error occurred during recovery`;
+    const appBase = process.env.APP_BASE_URL || "http://localhost:3000";
+    const validRedirectUrl = isValidRedirectUrl(req.query.next as string, appBase) ? (req.query.next as string) : appBase;
+    const errorUrl = `${validRedirectUrl}#error=server_error&error_description=An error occurred during recovery`;
     res.setHeader("Location", errorUrl);
     res.status(302).end();
   }

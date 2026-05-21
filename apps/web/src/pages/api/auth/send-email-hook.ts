@@ -1,4 +1,4 @@
-import { createHmac } from "crypto";
+import { createHmac, timingSafeEqual } from "crypto";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Resend } from "resend";
 
@@ -20,7 +20,7 @@ function verifySupabaseWebhookSignature(
       .update(body)
       .digest("base64");
 
-    return signature === computedSignature;
+    return timingSafeEqual(Buffer.from(signature), Buffer.from(computedSignature));
   } catch {
     return false;
   }
